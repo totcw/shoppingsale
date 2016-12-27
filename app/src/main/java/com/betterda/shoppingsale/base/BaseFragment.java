@@ -96,6 +96,11 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     }
 
     @Override
+    public RxManager getRxManager() {
+        return mRxManager;
+    }
+
+    @Override
     public void onDestroyView() {
         if (getPresenter() != null) {
             //解除presenter和view的关联

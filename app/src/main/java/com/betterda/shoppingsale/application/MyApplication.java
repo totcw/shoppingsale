@@ -21,7 +21,7 @@ public class MyApplication extends Application {
         if (null == list) {
             list = new ArrayList<>();
         }
-
+        instance = this;
 
     }
 

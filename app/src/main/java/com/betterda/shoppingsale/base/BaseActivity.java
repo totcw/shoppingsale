@@ -106,6 +106,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         Log.i("BaseActivity", msg);
     }
 
+    @Override
+    public RxManager getRxManager() {
+        return mRxManager;
+    }
 
     @Override
     protected void onDestroy() {

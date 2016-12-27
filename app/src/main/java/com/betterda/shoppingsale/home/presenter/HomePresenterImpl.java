@@ -22,7 +22,6 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,HomeContr
 
     private ShouYeFragment mShouYeFragment;
     private SortFragment mSortFragment;
-    private FindFragment mFindFragment;
     private MyFragment  mMyFragment;
     private FragmentManager mFragmentManager;
 
@@ -41,13 +40,12 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,HomeContr
 
         mShouYeFragment = new ShouYeFragment();
         mSortFragment = new SortFragment();
-        mFindFragment = new FindFragment();
         mMyFragment = new MyFragment();
 
         FragmentTransaction fragmentTransaction = mFragmentManager.beginTransaction();
         if (!getView().getmActivity().isFinishing()) {
             fragmentTransaction.add(R.id.frame_activity_main, mShouYeFragment).add(R.id.frame_activity_main, mSortFragment)
-                    .add(R.id.frame_activity_main, mFindFragment).add(R.id.frame_activity_main,mMyFragment);
+                    .add(R.id.frame_activity_main,mMyFragment);
 
             fragmentTransaction.commitAllowingStateLoss();
         }
@@ -67,7 +65,6 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,HomeContr
                 if (!getView().getmActivity().isFinishing()) {
                     fragmentTransaction2.hide(mShouYeFragment);
                     fragmentTransaction2.hide(mSortFragment);
-                    fragmentTransaction2.hide(mFindFragment);
                     fragmentTransaction2.hide(mMyFragment);
                     fragmentTransaction2.show(fragment);
                     fragmentTransaction2.commitAllowingStateLoss();
@@ -91,11 +88,6 @@ public class HomePresenterImpl extends BasePresenter<HomeContract.View,HomeContr
             case R.id.idv_activity_main_sort:
 
                 switchFragmentTo(mSortFragment);
-
-                break;
-            case R.id.idv_activity_main_find:
-
-                switchFragmentTo(mFindFragment);
 
                 break;
             case R.id.idv_activity_main_my:
