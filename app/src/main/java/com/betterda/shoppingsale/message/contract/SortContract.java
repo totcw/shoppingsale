@@ -1,4 +1,6 @@
-package com.betterda.shoppingsale.sort.contract;
+package com.betterda.shoppingsale.message.contract;
+
+import android.support.v7.widget.RecyclerView;
 
 import com.betterda.shoppingsale.base.IModel;
 import com.betterda.shoppingsale.base.IPresenter;
@@ -14,6 +16,7 @@ public interface View extends IView{
 }
 
 public interface Presenter extends IPresenter<View>{
+    RecyclerView.Adapter getRvAdapter();
 }
 
 public interface Model extends IModel{

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.betterda.shoppingsale">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.MyApplication"
@@ -18,6 +18,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".wallet.WalletActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".wallet.CashWalletActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".wallet.MingXiActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".wallet.XiaoFeiWalletActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

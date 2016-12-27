@@ -85,12 +85,10 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      * 关闭activity的方法
      */
     public void back() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          finishAfterTransition();
-        } else {
+
             finish();
-             overridePendingTransition(R.anim.activity_slide_finish_in,R.anim.activity_slide_finish_out);
-        }
+        overridePendingTransition(R.anim.activity_slide_finish_in,R.anim.activity_slide_finish_out);
+
     }
 
 

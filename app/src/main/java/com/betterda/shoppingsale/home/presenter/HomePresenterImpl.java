@@ -8,11 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BasePresenter;
-import com.betterda.shoppingsale.find.FindFragment;
 import com.betterda.shoppingsale.home.contract.HomeContract;
 import com.betterda.shoppingsale.my.MyFragment;
 import com.betterda.shoppingsale.shouye.ShouYeFragment;
-import com.betterda.shoppingsale.sort.SortFragment;
+import com.betterda.shoppingsale.message.SortFragment;
 
 /**
 * Created by Administrator on 2016/12/05

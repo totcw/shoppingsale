@@ -38,6 +38,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
     private View mViewLunbotu;//轮播图的view
     private ViewPager mVpLunbotu;
     private LinearLayout mLinearFirst;
+    private View mViewSecond; //第二区域的view
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -86,7 +87,8 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
      * 加载第二区域
      */
     private void initSecond() {
-
+        mViewSecond = View.inflate(getmActivity(), R.layout.view_second, null);
+        mFrameShouyeSecond.addView(mViewSecond);
     }
 
 

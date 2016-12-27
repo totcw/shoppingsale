@@ -16,7 +16,9 @@ public abstract class BasePresenter<T extends IView,M extends IModel> implements
     public void attachView(T view) {
         mView = view;
     }
-
+    public void attachModel(M mModel) {
+        this.mModel = mModel;
+    }
     @Override
     public void detachView() {
         mView = null;
