@@ -29,8 +29,8 @@ public class UiUtils {
      *
      * @param message
      */
-    public static void showToast(String message) {
-        Toast.makeText(MyApplication.getInstance(), message, Toast.LENGTH_SHORT).show();
+    public static void showToast(Activity activity,String message) {
+        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -74,8 +74,8 @@ public class UiUtils {
      * 创建对话框
      */
 
-    public static void showDialog(String title, String content, final showDialogListener listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MyApplication.getInstance());
+    public static void showDialog(Activity activity,String title, String content, final showDialogListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(title)
                 .setMessage(content)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

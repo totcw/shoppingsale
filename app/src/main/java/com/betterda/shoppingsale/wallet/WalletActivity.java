@@ -57,7 +57,7 @@ public class WalletActivity extends BaseActivity<WalletContract.Presenter> imple
                 UiUtils.startIntent(getmActivity(),XiaoFeiWalletActivity.class);
                 break;
             case R.id.relative_wallet_yinhangka://我的银行卡
-                UiUtils.startIntent(getmActivity(),XiaoFeiWalletActivity.class);
+                UiUtils.startIntent(getmActivity(),MyYinHangKaActivity.class);
                 break;
             case R.id.bar_back:
                 back();

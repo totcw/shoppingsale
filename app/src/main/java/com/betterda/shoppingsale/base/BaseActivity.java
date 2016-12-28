@@ -2,13 +2,18 @@ package com.betterda.shoppingsale.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.PopupWindow;
 
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.utils.RxManager;
+import com.betterda.shoppingsale.utils.UiUtils;
 
 import butterknife.ButterKnife;
 
@@ -21,6 +26,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
     protected P mPresenter;
     protected RxManager mRxManager;
+    private PopupWindow popupWindow;
 
 
     @Override
@@ -109,6 +115,81 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         return mRxManager;
     }
 
+    /**
+     * 初始化并显示PopupWindow
+     *
+     * @param view     要显示的界面
+     */
+    public void setUpPopupWindow(View view) {
+        // 如果activity不在运行 就返回
+        if (this.isFinishing()) {
+            return;
+        }
+
+        popupWindow = new PopupWindow(view, -1, -2);
+        // 设置点到外面可以取消,下面这2句要一起
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+        //设置为true 会拦截事件,pop外部的控件无法获取到事件
+        popupWindow.setFocusable(true);
+
+        UiUtils.backgroundAlpha(0.5f, getmActivity());
+        //设置可以触摸
+        popupWindow.setTouchable(true);
+
+        if (popupWindow != null) {
+            if (!popupWindow.isShowing()) {
+                //设置动画
+                popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+                popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+
+
+            }
+        }
+        popupWindow.update();
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+
+            @Override
+            public void onDismiss() {
+
+                dismiss();
+                popupWindow = null;
+            }
+        });
+
+
+
+
+    }
+
+    /**
+     * popupwindow消失回调方法
+     */
+    public void dismiss() {
+
+    }
+
+    public PopupWindow getPopupWindow() {
+        return popupWindow;
+    }
+
+    /**
+     * 关闭popupwindow
+     */
+    public void closePopupWindow() {
+        if (null != popupWindow && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+            popupWindow = null;
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        UiUtils.setOverdepengingOut(this);
+    }
+
     @Override
     protected void onDestroy() {
 
@@ -119,6 +200,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             getPresenter().destroy();
         }
         mRxManager.clear();
+        closePopupWindow();
+
         super.onDestroy();
     }
 
