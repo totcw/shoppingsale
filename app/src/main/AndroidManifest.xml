@@ -35,6 +35,15 @@
             android:name=".wallet.MyYinHangKaActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".tuijian.LiJiTuijianActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".tuijian.MyTuijianActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".tuijian.TuiJianFanxianActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name=".wallet.AddBankCardActivity"
             android:screenOrientation="portrait"></activity>
     </application>

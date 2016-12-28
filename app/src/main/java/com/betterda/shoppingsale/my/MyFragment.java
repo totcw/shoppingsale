@@ -9,6 +9,8 @@ import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseFragment;
 import com.betterda.shoppingsale.my.contract.MyContract;
 import com.betterda.shoppingsale.my.presenter.MyPresenterImpl;
+import com.betterda.shoppingsale.tuijian.LiJiTuijianActivity;
+import com.betterda.shoppingsale.tuijian.MyTuijianActivity;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.wallet.WalletActivity;
 import com.betterda.shoppingsale.widget.NormalTopBar;
@@ -51,8 +53,10 @@ public class MyFragment extends BaseFragment<MyContract.Presenter> implements My
                 UiUtils.startIntent(getmActivity(), WalletActivity.class);
                 break;
             case R.id.relative_my_member:
+                UiUtils.startIntent(getmActivity(), MyTuijianActivity.class);
                 break;
             case R.id.relative_my_tuijian:
+                UiUtils.startIntent(getmActivity(), LiJiTuijianActivity.class);
                 break;
             case R.id.relative_my_setting:
                 break;
