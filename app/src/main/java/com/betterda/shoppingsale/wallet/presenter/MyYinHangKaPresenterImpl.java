@@ -1,5 +1,6 @@
 package com.betterda.shoppingsale.wallet.presenter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -31,8 +32,14 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
     private CommonAdapter<BankCard> mBankCardCommonAdapter;
     private ShapeLoadingDialog dialog;
 
+    private boolean isChose;//是否是要选择银行卡
+
     @Override
     public void start() {
+        Intent intent = getView().getmActivity().getIntent();
+        if (intent != null) {
+            isChose=  intent.getBooleanExtra("tixian", false);
+        }
         getData();
     }
 
@@ -50,9 +57,9 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                     if (BankData.getBank(bankCard.getBank()) != -1) {
                         viewHolder.setImageResource(R.id.iv_yinhangka_icon, BankData.getBank(bankCard.getBank()));
                     }
-                    viewHolder.setOnClickListener(R.id.linear_yinhangka, new View.OnClickListener() {
+                    viewHolder.setOnLongClickListener(R.id.linear_yinhangka, new View.OnLongClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public boolean onLongClick(View v) {
                             UiUtils.showDialog(getView().getmActivity(),"温馨提示", "确定要删除该银行卡吗?", new UiUtils.showDialogListener() {
                                 @Override
                                 public void exitDialog() {
@@ -64,8 +71,23 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                                     comfirm(bankCard);
                                 }
                             });
+                            return true;
                         }
                     });
+
+                    viewHolder.setOnClickListener(R.id.linear_yinhangka, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (isChose) {
+                                Intent intent = new Intent();
+                                intent.putExtra("bank", bankCard.getBank());
+                                intent.putExtra("bankCrad",bankCard.getCardNum());
+                                getView().getmActivity().setResult(0,intent);
+                                getView().getmActivity().finish();
+                            }
+                        }
+                    });
+
                 }
             }
         };

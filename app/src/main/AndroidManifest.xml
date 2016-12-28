@@ -46,6 +46,9 @@
         <activity
             android:name=".wallet.AddBankCardActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".wallet.TiXianActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
