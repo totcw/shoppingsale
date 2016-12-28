@@ -49,6 +49,18 @@
         <activity
             android:name=".wallet.TiXianActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".setting.SettingActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".order.OrderActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".order.OrderDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".stock.StockActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

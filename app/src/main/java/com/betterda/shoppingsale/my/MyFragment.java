@@ -9,6 +9,7 @@ import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseFragment;
 import com.betterda.shoppingsale.my.contract.MyContract;
 import com.betterda.shoppingsale.my.presenter.MyPresenterImpl;
+import com.betterda.shoppingsale.setting.SettingActivity;
 import com.betterda.shoppingsale.tuijian.LiJiTuijianActivity;
 import com.betterda.shoppingsale.tuijian.MyTuijianActivity;
 import com.betterda.shoppingsale.utils.UiUtils;
@@ -59,6 +60,7 @@ public class MyFragment extends BaseFragment<MyContract.Presenter> implements My
                 UiUtils.startIntent(getmActivity(), LiJiTuijianActivity.class);
                 break;
             case R.id.relative_my_setting:
+                UiUtils.startIntent(getmActivity(), SettingActivity.class);
                 break;
         }
     }
