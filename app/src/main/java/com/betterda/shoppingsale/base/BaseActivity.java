@@ -1,5 +1,6 @@
 package com.betterda.shoppingsale.base;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,8 +13,12 @@ import android.view.View;
 import android.widget.PopupWindow;
 
 import com.betterda.shoppingsale.R;
+import com.betterda.shoppingsale.utils.PermissionUtil;
 import com.betterda.shoppingsale.utils.RxManager;
 import com.betterda.shoppingsale.utils.UiUtils;
+import com.betterda.shoppingsale.welcome.WelcomeActivity;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -23,7 +28,8 @@ import butterknife.ButterKnife;
  */
 
 public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivity implements IView {
-
+    private String[] REQUEST_PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
     protected P mPresenter;
     protected RxManager mRxManager;
     private PopupWindow popupWindow;
@@ -51,7 +57,25 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //统一检查权限
+        PermissionUtil.checkPermission(getmActivity(), REQUEST_PERMISSIONS,  new PermissionUtil.permissionInterface() {
+            @Override
+            public void success() {
 
+            }
+
+            @Override
+            public void fail(List<String> permissions) {
+
+                //没有权限就回到欢迎页面
+                UiUtils.startIntent(getmActivity(), WelcomeActivity.class);
+
+            }
+        });
+    }
 
 
     /**
@@ -115,18 +139,26 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         return mRxManager;
     }
 
+
+
+
+    public void setUpPopupWindow(View view){
+        setUpPopupWindow(view,null,-1,-2);
+    }
+
+
     /**
      * 初始化并显示PopupWindow
      *
      * @param view     要显示的界面
      */
-    public void setUpPopupWindow(View view) {
+    public void setUpPopupWindow(View view,View showview,int width,int height) {
         // 如果activity不在运行 就返回
         if (this.isFinishing()) {
             return;
         }
 
-        popupWindow = new PopupWindow(view, -1, -2);
+        popupWindow = new PopupWindow(view, width, height);
         // 设置点到外面可以取消,下面这2句要一起
         popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
@@ -139,9 +171,14 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
 
         if (popupWindow != null) {
             if (!popupWindow.isShowing()) {
-                //设置动画
-                popupWindow.setAnimationStyle(R.style.popwin_anim_style);
-                popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                if (showview == null) {
+                    //设置动画
+                    popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+                    popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+
+                } else {
+                    popupWindow.showAsDropDown(showview);
+                }
 
 
             }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:paddingRight="10dp"
+    android:layout_height="96dp">
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="96dp"
+        android:background="@mipmap/bg_ziti"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/tv_pp_ziti_sao"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="扫一扫"
+            android:textColor="@color/activityMainPressed"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divierLine"></View>
+
+        <TextView
+            android:id="@+id/tv_pp_ziti_write"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="手输核对"
+            android:textColor="@color/activityMainPressed"
+            android:textSize="14sp" />
+    </LinearLayout>
+</FrameLayout>

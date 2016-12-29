@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseFragment;
 import com.betterda.shoppingsale.order.OrderActivity;
@@ -21,6 +22,7 @@ import com.betterda.shoppingsale.shouye.contract.ShouYeContract;
 import com.betterda.shoppingsale.shouye.presenter.ShouYePresenterImpl;
 import com.betterda.shoppingsale.stock.StockActivity;
 import com.betterda.shoppingsale.utils.UiUtils;
+import com.betterda.shoppingsale.ziti.ZiTiActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,6 +61,17 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
     protected ShouYeContract.Presenter onLoadPresenter() {
         return new ShouYePresenterImpl();
     }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {//隐藏
+        } else {
+            StatusBarCompat.setStatusBar5(getmActivity(),R.color.backgroudyellow);
+        }
+    }
+
 
     @Override
     public void initData() {
@@ -100,6 +113,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                 UiUtils.startIntent(getmActivity(), StockActivity.class);
                 break;
             case R.id.linear_second6://扫码自提
+                UiUtils.startIntent(getmActivity(), ZiTiActivity.class);
                 break;
         }
     }

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <com.betterda.shoppingsale.widget.NormalTopBar
+        android:id="@+id/topbar_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.betterda.shoppingsale.widget.NormalTopBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="填写资料"
+                android:textColor="@color/shouye_fenlei_red"
+                android:textSize="@dimen/textsize_smallest" />
+
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+
+                    android:id="@+id/tv_register_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_oval"
+                    android:gravity="center"
+                    android:text="3"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/textsize_smallest" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv_register_one"
+                    android:background="@mipmap/rect_red" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="等待审核"
+                android:textColor="@color/shouye_lv_tv"
+                android:textSize="@dimen/textsize_smallest" />
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <TextView
+
+                    android:id="@+id/tv_register_three"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_oval_gray"
+                    android:gravity="center"
+                    android:text="2"
+                    android:textColor="#ffffff"
+                    android:textSize="@dimen/textsize_smallest" />
+
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/tv_register_three"
+                    android:background="@mipmap/rect_gray" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+
+        android:background="@color/lv_divider"></View>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="注册名称:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/et_register_shop_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:minHeight="40dp"
+                    android:gravity="center"
+                    android:padding="2dp"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="法人姓名:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:minHeight="40dp"
+                    android:padding="2dp"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:id="@+id/et_register_name"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号码:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:inputType="phone"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:minHeight="40dp"
+                    android:id="@+id/et_register_shop_number"
+                    android:padding="2dp"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="所在区域:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:gravity="center"
+                    android:minHeight="40dp"
+                    android:id="@+id/tv_register_address1"
+                    android:text="请选择所在区域"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="详细地址:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/shape_bottom_top_line"
+                    android:minHeight="40dp"
+                    android:id="@+id/et_register_address2"
+                    android:padding="2dp"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="        附件:"
+                    android:textColor="@color/shouye_renmen_tv"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:minHeight="40dp"
+                    android:text=" (请上传相关的图片资料)"
+                    android:textColor="@color/shouye_lv_tv"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_reigster1"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@mipmap/add_picture"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="营业执照"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/sv_publish_tuwen2"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@mipmap/add_picture"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="身份证正面"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/sv_publish_tuwen3"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:background="@mipmap/add_picture"
+                        />
+
+                    <TextView
+                        android:layout_marginTop="5dp"
+                        android:text="身份证反面"
+                        android:textSize="10sp"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_register_commit"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="提交"
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:background="@drawable/shape_corner_red"
+                />
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

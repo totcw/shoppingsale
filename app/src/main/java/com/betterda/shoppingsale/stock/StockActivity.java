@@ -1,6 +1,5 @@
 package com.betterda.shoppingsale.stock;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
@@ -13,7 +12,6 @@ import com.betterda.shoppingsale.stock.presenter.StockPresenterImpl;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

@@ -4,11 +4,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 import com.betterda.mylibrary.view.IndicatorView;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
 import com.betterda.shoppingsale.home.contract.HomeContract;
 import com.betterda.shoppingsale.home.presenter.HomePresenterImpl;
+import com.betterda.shoppingsale.welcome.WelcomeActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,6 +35,7 @@ public class MainActivity extends BaseActivity<HomeContract.Presenter> implement
     @Override
     public void initView() {
         super.initView();
+        StatusBarCompat.setStatusBar5(getmActivity(), R.color.backgroudyellow);
         setContentView(R.layout.activity_main);
     }
 
@@ -102,6 +105,14 @@ public class MainActivity extends BaseActivity<HomeContract.Presenter> implement
             idv.setTabSelected(true);
 
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        //发送广播 关闭欢迎页面
+        mRxManager.post(WelcomeActivity.class.getSimpleName(),"finish");
+        super.onBackPressed();
 
     }
 }

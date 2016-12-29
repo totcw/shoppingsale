@@ -1,6 +1,7 @@
 package com.betterda.shoppingsale.http;
 
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.UserInfo;
 import com.betterda.shoppingsale.shouye.model.LunBoTu;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.wallet.model.BankCard;
@@ -18,6 +19,29 @@ import rx.Observable;
  * Created by Administrator on 2016/7/29.
  */
 public interface NetService {
+
+    /**
+     * 登录
+     *
+     * @param account
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_LOGIN)
+    Observable<BaseCallModel<UserInfo>> getLogin(@Field("account") String account,
+                                                 @Field("password") String password);
+
+    /**
+     * 三方登录
+     *
+     * @param account
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_LOGIN)
+    Observable<BaseCallModel<UserInfo>> getLoginThree(@Field("account") String account,@Field("type") String type);
+
     /**
      * 获取广告栏
      *

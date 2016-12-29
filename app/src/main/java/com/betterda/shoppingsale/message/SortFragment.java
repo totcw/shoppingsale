@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.Utils.StatusBarCompat;
 import com.betterda.mylibrary.xrecycleview.XRecyclerView;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseFragment;
@@ -35,7 +36,14 @@ public class SortFragment extends BaseFragment<SortContract.Presenter> implement
     public View initView(LayoutInflater inflater) {
         return inflater.inflate(R.layout.fragment_message, null);
     }
-
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {//隐藏
+        } else {
+            StatusBarCompat.setStatusBar5(getmActivity(),R.color.white);
+        }
+    }
 
     @Override
     protected SortContract.Presenter onLoadPresenter() {
