@@ -11,6 +11,7 @@ import com.betterda.shoppingsale.base.BaseActivity;
 import com.betterda.shoppingsale.wallet.contract.MingXiContract;
 import com.betterda.shoppingsale.wallet.presenter.MingXiPresenterImpl;
 import com.betterda.shoppingsale.widget.NormalTopBar;
+import com.betterda.shoppingsale.widget.TitleItemDecoration;
 
 
 import butterknife.BindView;
@@ -57,8 +58,20 @@ public class MingXiActivity extends BaseActivity<MingXiContract.Presenter> imple
 
     public void initRv(RecyclerView.Adapter adapter) {
         mLayoutRecycleview.setVisibility(View.VISIBLE);
+        mLayoutRecycleview.addItemDecoration(getPresenter().getItemDecoration());
         mLayoutRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mLayoutRecycleview.setLoadingMoreEnabled(true);
         mLayoutRecycleview.setAdapter(adapter);
+        mLayoutRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
     }
 }

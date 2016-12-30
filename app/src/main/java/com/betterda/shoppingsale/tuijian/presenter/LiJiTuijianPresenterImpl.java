@@ -7,6 +7,9 @@ import com.betterda.shoppingsale.base.BasePresenter;
 import com.betterda.shoppingsale.tuijian.contract.LiJiTuijianContract;
 import com.betterda.shoppingsale.tuijian.model.LiJiTuijianModelImpl;
 import com.betterda.shoppingsale.tuijian.model.Share;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
@@ -33,7 +36,26 @@ public class LiJiTuijianPresenterImpl extends BasePresenter<LiJiTuijianContract.
                     holder.setOnClickListener(R.id.linear_item_productdetail_share, new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            //要判断网络
+                            new ShareAction(getView().getmActivity()).setPlatform(SHARE_MEDIA.SINA)
+                                    .withText("hello")
+                                    .setCallback(new UMShareListener() {
+                                        @Override
+                                        public void onResult(SHARE_MEDIA share_media) {
+                                            System.out.println("成功:"+share_media.toString());
+                                        }
 
+                                        @Override
+                                        public void onError(SHARE_MEDIA share_media, Throwable throwable) {
+                                            System.out.println("错误:"+share_media.toString());
+                                        }
+
+                                        @Override
+                                        public void onCancel(SHARE_MEDIA share_media) {
+                                            System.out.println("取消:"+share_media.toString());
+                                        }
+                                    })
+                                    .share();
                             getView().close();
                         }
                     });
