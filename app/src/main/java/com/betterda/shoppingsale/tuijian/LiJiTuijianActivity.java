@@ -15,6 +15,7 @@ import com.betterda.shoppingsale.tuijian.presenter.LiJiTuijianPresenterImpl;
 import com.betterda.shoppingsale.utils.ImageTools;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.widget.NormalTopBar;
+import com.umeng.socialize.UMShareAPI;
 
 
 import butterknife.BindView;
@@ -70,7 +71,7 @@ public class LiJiTuijianActivity extends BaseActivity<LiJiTuijianContract.Presen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //qq需要
-       // UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
     }
     /**
      * 分享

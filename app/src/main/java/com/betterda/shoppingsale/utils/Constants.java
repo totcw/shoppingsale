@@ -24,4 +24,8 @@ public class Constants {
         public static final String URL_PWD_UPDATE = "";
         public static final String URL_LUNBO = URL+"appAPI.do?api/indeximages/get";//轮播广告
     }
+
+    public class WeiXin {
+        public static final String APP_ID ="";
+    }
 }
