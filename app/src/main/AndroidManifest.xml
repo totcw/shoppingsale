@@ -3,8 +3,19 @@
     package="com.betterda.shoppingsale">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!--二维码扫码-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.change_network_state" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 
     <application
@@ -83,6 +94,9 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name=".ziti.WriteZiTiActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".zxing.CaptureActivity"
             android:screenOrientation="portrait"></activity>
     </application>
 

@@ -1,5 +1,6 @@
 package com.betterda.shoppingsale.ziti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 import com.betterda.shoppingsale.ziti.contract.ZiTiContract;
 import com.betterda.shoppingsale.ziti.presenter.ZiTiPresenterImpl;
+import com.betterda.shoppingsale.zxing.CaptureActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +84,8 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
         tvSao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getmActivity(), CaptureActivity.class);
+                UiUtils.startIntentForResult(getmActivity(),intent,0);
                 closePopupWindow();
             }
         });
