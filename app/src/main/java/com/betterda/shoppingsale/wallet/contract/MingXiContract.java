@@ -23,6 +23,8 @@ public interface View extends IView {
 
 public interface Presenter extends IPresenter<View> {
     RecyclerView.ItemDecoration getItemDecoration();
+
+    void loadMore();
 }
 
 public interface Model extends IModel {

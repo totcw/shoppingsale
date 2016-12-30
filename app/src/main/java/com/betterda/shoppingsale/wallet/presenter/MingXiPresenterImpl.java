@@ -55,6 +55,15 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View,MingX
     }
 
     @Override
+    public void loadMore() {
+        for (int i = 0; i < 3; i++) {
+                TitleBean<MingXi> mingXiTitleBean = new TitleBean<>();
+                mingXiTitleBean.setTag(i+"月");
+                mingXiList.add(mingXiTitleBean);
+        }
+    }
+
+    @Override
     public void destroy() {
 
     }

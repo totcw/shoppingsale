@@ -72,9 +72,10 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
 
     private void initRv() {
         mRecycleview.setVisibility(View.VISIBLE);
-        mRecycleview.setPullRefreshEnabled(false);
+        mRecycleview.setPullRefreshEnabled(true);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
+        mRecycleview.addItemDecoration(getPresenter().getItemDecoration());
 
     }
     private void shoAdd() {

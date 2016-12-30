@@ -70,7 +70,8 @@ public class MingXiActivity extends BaseActivity<MingXiContract.Presenter> imple
 
             @Override
             public void onLoadMore() {
-
+                getPresenter().loadMore();
+                mLayoutRecycleview.setNoMore(true);
             }
         });
     }

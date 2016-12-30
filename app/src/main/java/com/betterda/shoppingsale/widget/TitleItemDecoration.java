@@ -26,9 +26,10 @@ public class TitleItemDecoration<T> extends RecyclerView.ItemDecoration {
     private Rect mBounds;//用于存放测量文字Rect
 
     private int mTitleHeight;//title的高
-    private static int COLOR_TITLE_BG = Color.parseColor("#FFDFDFDF");
+    private static int COLOR_TITLE_BG = Color.parseColor("#FFfafafa");
     private static int COLOR_TITLE_FONT = Color.parseColor("#FF000000");
     private static int mTitleFontSize;//title字体大小
+    private static int marginLeft;//title字体大小
 
 
     public TitleItemDecoration(Context context, List<TitleBean<T>> datas) {
@@ -38,6 +39,7 @@ public class TitleItemDecoration<T> extends RecyclerView.ItemDecoration {
         mBounds = new Rect();
         mTitleHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, context.getResources().getDisplayMetrics());
         mTitleFontSize = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, context.getResources().getDisplayMetrics());
+        marginLeft = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, context.getResources().getDisplayMetrics());
         mPaint.setTextSize(mTitleFontSize);
         mPaint.setAntiAlias(true);
     }
@@ -85,13 +87,14 @@ public class TitleItemDecoration<T> extends RecyclerView.ItemDecoration {
 
             mPaint.setColor(COLOR_TITLE_BG);
             c.drawRect(left, child.getTop() - params.topMargin - mTitleHeight, right, child.getTop() - params.topMargin, mPaint);
+            c.drawLine(left, child.getBottom() - params.topMargin - mTitleHeight, right, child.getBottom() - params.topMargin, mPaint);
             mPaint.setColor(COLOR_TITLE_FONT);
 /*
         Paint.FontMetricsInt fontMetrics = mPaint.getFontMetricsInt();
         int baseline = (getMeasuredHeight() - fontMetrics.bottom + fontMetrics.top) / 2 - fontMetrics.top;*/
 
             mPaint.getTextBounds(mDatas.get(position).getTag(), 0, mDatas.get(position).getTag().length(), mBounds);
-            c.drawText(mDatas.get(position).getTag(), child.getPaddingLeft(), child.getTop() - params.topMargin - (mTitleHeight / 2 - mBounds.height() / 2), mPaint);
+            c.drawText(mDatas.get(position).getTag(), child.getPaddingLeft()+marginLeft, child.getTop() - params.topMargin - (mTitleHeight / 2 - mBounds.height() / 2), mPaint);
 
         }
     }
@@ -111,7 +114,7 @@ public class TitleItemDecoration<T> extends RecyclerView.ItemDecoration {
                         c.drawRect(parent.getPaddingLeft(), parent.getPaddingTop(), parent.getRight() - parent.getPaddingRight(), parent.getPaddingTop() + mTitleHeight, mPaint);
                         mPaint.setColor(COLOR_TITLE_FONT);
                         mPaint.getTextBounds(tag, 0, tag.length(), mBounds);
-                        c.drawText(tag, child.getPaddingLeft(),
+                        c.drawText(tag, child.getPaddingLeft()+marginLeft,
                                 parent.getPaddingTop() + mTitleHeight - (mTitleHeight / 2 - mBounds.height() / 2),
                                 mPaint);
                     }
@@ -126,16 +129,17 @@ public class TitleItemDecoration<T> extends RecyclerView.ItemDecoration {
         //减去1 是因为有个头布局刷新
         int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition()-1;
         //我记得Rv的item position在重置时可能为-1.保险点判断一下吧
-
-        if (position > -1) {
-            if (position == 0) {//等于0肯定要有title的
-                outRect.set(0, mTitleHeight, 0, 0);
-            } else {
-                //其他的通过判断,position < mDatas.size()是因为有个上拉加载
-                if (null != mDatas && position < mDatas.size() && null != mDatas.get(position).getTag() && !mDatas.get(position).getTag().equals(mDatas.get(position - 1).getTag())) {
-                    outRect.set(0, mTitleHeight, 0, 0);//不为空 且跟前一个tag不一样了，说明是新的分类，也要title
+        if (null != mDatas && position < mDatas.size()) {
+            if (position > -1) {
+                if (position == 0) {//等于0肯定要有title的
+                    outRect.set(0, mTitleHeight, 0, 0);
                 } else {
-                    outRect.set(0, 0, 0, 0);
+                    //其他的通过判断,position < mDatas.size()是因为有个上拉加载
+                    if (null != mDatas.get(position).getTag() && !mDatas.get(position).getTag().equals(mDatas.get(position - 1).getTag())) {
+                        outRect.set(0, mTitleHeight, 0, 0);//不为空 且跟前一个tag不一样了，说明是新的分类，也要title
+                    } else {
+                        outRect.set(0, 0, 0, 0);
+                    }
                 }
             }
         }
