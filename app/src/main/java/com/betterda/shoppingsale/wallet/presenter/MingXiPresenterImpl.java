@@ -61,6 +61,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View,MingX
                 mingXiTitleBean.setTag(i+"月");
                 mingXiList.add(mingXiTitleBean);
         }
+        mingXiCommonAdapter.notifyDataSetChanged();
     }
 
     @Override
