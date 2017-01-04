@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
+ * 消息界面
  * Created by Administrator on 2016/12/8.
  */
 

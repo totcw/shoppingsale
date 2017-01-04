@@ -113,6 +113,9 @@
         <activity
             android:name=".zxing.CaptureActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".message.MeassageActivity"
+            android:screenOrientation="portrait"></activity>
 
 
 
