@@ -19,6 +19,7 @@ import butterknife.OnClick;
 import kankan.wheel.widget.WheelDialog;
 
 /**
+ * 注册
  * Created by Administrator on 2016/12/29.
  */
 

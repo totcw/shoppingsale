@@ -3,10 +3,12 @@ package com.betterda.shoppingsale.login;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.findpwd.FindPwdActivity;
 import com.betterda.shoppingsale.home.MainActivity;
 import com.betterda.shoppingsale.login.contract.LoginContract;
 import com.betterda.shoppingsale.login.presenter.LoginPresenterImpl;
@@ -34,6 +36,8 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     EditText mEtLoginNumber;
     @BindView(R.id.et_login_pwd)
     EditText mEtLoginPwd;
+    @BindView(R.id.iv_login_jizhu)
+    ImageView mIvJizhu;
 
 
     @Override
@@ -52,17 +56,18 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     public void init() {
         super.init();
         mTopbarLogin.setTitle("登录");
+        mTopbarLogin.setBackVisibility(false);
     }
 
-    @OnClick({R.id.tv_login_pwd, R.id.bar_back, R.id.btn_login, R.id.relative_login_register})
+    @OnClick({R.id.tv_login_pwd, R.id.bar_back, R.id.btn_login, R.id.relative_login_register,R.id.linear_login_pwd})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_login_pwd://忘记密码
-              //  UiUtils.startIntent(getmActivity(), FindPwdActivity.class);
+                UiUtils.startIntent(getmActivity(), FindPwdActivity.class);
                 break;
             case R.id.btn_login:
                 UiUtils.startIntent(getmActivity(), MainActivity.class);
-              /*  NetworkUtils.isNetWork(getmActivity(), mTopbarLogin, new NetworkUtils.SetDataInterface() {
+             /*   NetworkUtils.isNetWork(getmActivity(), mTopbarLogin, new NetworkUtils.SetDataInterface() {
                     @Override
                     public void getDataApi() {
                         getPresenter().login();
@@ -71,6 +76,9 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 break;
             case R.id.relative_login_register:
                 UiUtils.startIntent(getmActivity(), RegisterActivity.class);
+                break;
+            case R.id.linear_login_pwd:
+                mIvJizhu.setSelected(!mIvJizhu.isSelected());
                 break;
 
             case R.id.bar_back:
@@ -92,6 +100,14 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     public String getPwd() {
         return mEtLoginPwd.getText().toString().trim();
+    }
+
+    /**
+     * 是否记住密码
+     * @return
+     */
+    public boolean isSelectJizhu() {
+        return mIvJizhu.isSelected();
     }
 
     @Override

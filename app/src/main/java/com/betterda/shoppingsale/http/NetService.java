@@ -42,6 +42,21 @@ public interface NetService {
     @POST(Constants.Url.URL_LOGIN)
     Observable<BaseCallModel<UserInfo>> getLoginThree(@Field("account") String account,@Field("type") String type);
 
+
+
+    /**
+     * 忘记密码
+     *
+     * @param account
+     * @param password
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_PWD_UPDATE)
+    Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
+                                                   @Field("password") String password);
+
+
     /**
      * 获取广告栏
      *
@@ -96,7 +111,9 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_LUNBO)
     Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account,
+
                                                          @Field("token") String token
     );
+
 
 }

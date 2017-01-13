@@ -116,6 +116,9 @@
         <activity
             android:name=".message.MeassageActivity"
             android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".findpwd.FindPwdActivity"
+            android:screenOrientation="portrait"></activity>
 
 
 
