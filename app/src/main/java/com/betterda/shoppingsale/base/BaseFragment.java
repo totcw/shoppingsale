@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.betterda.mylibrary.LoadingPager;
+import com.betterda.shoppingsale.utils.CacheUtils;
+import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.RxManager;
 
 import butterknife.ButterKnife;
@@ -98,6 +101,25 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     @Override
     public RxManager getRxManager() {
         return mRxManager;
+    }
+
+    public LoadingPager getLodapger(){
+        return null;
+    };
+    /**
+     * 获取帐号
+     * @return
+     */
+    public String getAccount() {
+        return CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+    }
+
+    /**
+     * 获取token
+     * @return
+     */
+    public String getToken() {
+        return  CacheUtils.getString(getmActivity(), getAccount()+Constants.Cache.TOKEN, "");
     }
 
     @Override

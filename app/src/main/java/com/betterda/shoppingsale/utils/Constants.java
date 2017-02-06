@@ -18,14 +18,24 @@ public class Constants {
 
     public static class Url {
 
-        public  final static String URL="http://www.meichebang.com.cn/xsnano_web/";
+        public  final static String URL="http://192.168.1.145:8080/WinePIN/";
         public static final String URL_REGISTER = " ";
-        public static final String URL_LOGIN = "";
+        public static final String URL_LOGIN = "appAPI.do?api/merchant/login";
         public static final String URL_PWD_UPDATE = "";
         public static final String URL_LUNBO = URL+"appAPI.do?api/indeximages/get";//轮播广告
+        public static final String URL_GET_ORDER = "appAPI.do?api/merchant/order/get";//获取订单
+        public static final String URL_GET_ORDERDETAIL = "appAPI.do?api/merchant/orderDetail/get";//订单详情
+        public static final String URL_GET_COMFIRMZITI = "appAPI.do?api/order/product/provide";//确认自提
+        public static final String URL_GET_ORDERNUM = "appAPI.do?api/barCode/scan";//根据自提码获取订单号
     }
 
     public class WeiXin {
         public static final String APP_ID ="";
+    }
+
+    public class Cache {
+        public static final String ACCOUNT = "account";
+        public static final String PWD = "password";
+        public static final String TOKEN = "token";
     }
 }

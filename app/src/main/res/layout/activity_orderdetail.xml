@@ -29,7 +29,7 @@
             <LinearLayout
                 android:id="@+id/linear_orderdetail_pay"
                 android:layout_width="match_parent"
-                android:layout_height="49dp"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
                 <View
@@ -38,26 +38,40 @@
                     android:background="@color/lv_divider"></View>
 
                 <RelativeLayout
-
-
+                    android:id="@+id/relative_orderdetail_get"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
                     android:background="#ffffff">
 
                     <TextView
-                        android:id="@+id/tv_orderdetail_publish"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
                         android:background="@drawable/shape_corner_white_gray"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_alignParentRight="true"
-                        android:layout_marginRight="10dp"
-                        android:text="立即发货"
+                        android:text="立即收货"
+                        android:textColor="@color/activityMainPressed"
+                        android:textSize="@dimen/textsize_large" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/relative_orderdetail_ti"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff">
+
+                    <TextView
+
+                        android:background="@drawable/shape_corner_white_gray"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:text="确认提货"
                         android:textColor="@color/activityMainPressed"
                         android:textSize="@dimen/textsize_large" />
 

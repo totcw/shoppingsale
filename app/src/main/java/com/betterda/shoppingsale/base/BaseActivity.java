@@ -12,7 +12,10 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
 
+import com.betterda.mylibrary.LoadingPager;
 import com.betterda.shoppingsale.R;
+import com.betterda.shoppingsale.utils.CacheUtils;
+import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.PermissionUtil;
 import com.betterda.shoppingsale.utils.RxManager;
 import com.betterda.shoppingsale.utils.UiUtils;
@@ -138,8 +141,24 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     public RxManager getRxManager() {
         return mRxManager;
     }
+    public LoadingPager getLodapger(){
+        return null;
+    };
+    /**
+     * 获取帐号
+     * @return
+     */
+    public String getAccount() {
+        return CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+    }
 
-
+    /**
+     * 获取token
+     * @return
+     */
+    public String getToken() {
+        return  CacheUtils.getString(getmActivity(), getAccount()+Constants.Cache.TOKEN, "");
+    }
 
 
     public void setUpPopupWindow(View view){

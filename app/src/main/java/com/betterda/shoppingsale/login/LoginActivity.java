@@ -13,6 +13,8 @@ import com.betterda.shoppingsale.home.MainActivity;
 import com.betterda.shoppingsale.login.contract.LoginContract;
 import com.betterda.shoppingsale.login.presenter.LoginPresenterImpl;
 import com.betterda.shoppingsale.register.RegisterActivity;
+import com.betterda.shoppingsale.utils.CacheUtils;
+import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.welcome.WelcomeActivity;
@@ -57,6 +59,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         super.init();
         mTopbarLogin.setTitle("登录");
         mTopbarLogin.setBackVisibility(false);
+        String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+        String pwd = CacheUtils.getString(getmActivity(), account+Constants.Cache.PWD, "");
+        mEtLoginNumber.setText(account);
+        mEtLoginPwd.setText(pwd);
     }
 
     @OnClick({R.id.tv_login_pwd, R.id.bar_back, R.id.btn_login, R.id.relative_login_register,R.id.linear_login_pwd})
@@ -66,13 +72,13 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
                 UiUtils.startIntent(getmActivity(), FindPwdActivity.class);
                 break;
             case R.id.btn_login:
-                UiUtils.startIntent(getmActivity(), MainActivity.class);
-             /*   NetworkUtils.isNetWork(getmActivity(), mTopbarLogin, new NetworkUtils.SetDataInterface() {
+               // UiUtils.startIntent(getmActivity(), MainActivity.class);
+                NetworkUtils.isNetWork(getmActivity(), mTopbarLogin, new NetworkUtils.SetDataInterface() {
                     @Override
                     public void getDataApi() {
                         getPresenter().login();
                     }
-                });*/
+                });
                 break;
             case R.id.relative_login_register:
                 UiUtils.startIntent(getmActivity(), RegisterActivity.class);

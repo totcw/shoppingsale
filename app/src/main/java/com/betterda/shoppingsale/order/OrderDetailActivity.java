@@ -1,23 +1,27 @@
 package com.betterda.shoppingsale.order;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.javabean.Bus;
 import com.betterda.shoppingsale.order.contract.OrderDetailContract;
-import com.betterda.shoppingsale.order.model.OrderAll;
+import com.betterda.shoppingsale.javabean.OrderAll;
 import com.betterda.shoppingsale.order.presenter.OrderDetailPresenterImpl;
-import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.widget.NormalTopBar;
+import com.zhy.base.adapter.ViewHolder;
+import com.zhy.base.adapter.recyclerview.CommonAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -28,8 +32,10 @@ import butterknife.OnClick;
 public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presenter> implements OrderDetailContract.View {
     @BindView(R.id.topbar_oderdetail)
     NormalTopBar mTopbarOderdetail;
-    @BindView(R.id.linear_orderdetail_pay)
-    LinearLayout mLinearOrderdetailPay;//立即发货
+    @BindView(R.id.relative_orderdetail_get)
+    RelativeLayout mRelativeGet;//立即发货
+    @BindView(R.id.relative_orderdetail_ti)
+    RelativeLayout mRelativeTi;//确认提货
     @BindView(R.id.tv_orderdetail_state)
     TextView mTvOrderdetailState; //交易状态
     @BindView(R.id.tv_orderdetail_ordernum)
@@ -54,10 +60,10 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
     TextView mTvOrderdetailPeisong;//配送方式
     @BindView(R.id.tv_orderdetail_time)
     TextView mTvOrderdetailTime;//订单时间
-     @BindView(R.id.tv_orderdetail_daijinjuan)
+    @BindView(R.id.tv_orderdetail_daijinjuan)
     TextView mTvOrderdetailDaiJinJuan;//代金卷
-     @BindView(R.id.loadpager_orderdetail)
-     LoadingPager mLoadpager;
+    @BindView(R.id.loadpager_orderdetail)
+    LoadingPager mLoadpager;
 
     @Override
     protected OrderDetailContract.Presenter onLoadPresenter() {
@@ -78,15 +84,18 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
     }
 
 
-
-    @OnClick({R.id.tv_orderdetail_publish, R.id.bar_back})
+    @OnClick({R.id.relative_orderdetail_get, R.id.relative_orderdetail_ti, R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
                 back();
                 break;
-            case R.id.tv_orderdetail_publish:
+            case R.id.relative_orderdetail_get://立即发货
                 getPresenter().publish();
+                break;
+            case R.id.relative_orderdetail_ti://确认提货
+                getPresenter().ziti();
+
                 break;
         }
     }
@@ -98,16 +107,36 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
 
     @Override
     public void setOrder(OrderAll orderAll) {
+
         mTvOrderdetailAddress2.setText(orderAll.getAddress());
         mTvOrderdetailShouhuoren2.setText(orderAll.getName());
         mTvOrderdetailNumber.setText(orderAll.getNumber());
-        mTvOrderdetailOrdernum.setText(orderAll.getId());
-        mTvOrderdetailYunfei.setText(orderAll.getFreight()+"");
-        mTvOrderdetailPeisong.setText(orderAll.getWay());
+        mTvOrderdetailOrdernum.setText(orderAll.getOrderId());
+        mTvOrderdetailYunfei.setText(orderAll.getFreight() + "");
+        mTvOrderdetailPeisong.setText(orderAll.getType());
         mTvOrderdetailDaiJinJuan.setText(orderAll.getVoucher());
-        //mTvOrderdetailHejiMoney.setText();
         mTvOrderdetailTime.setText(orderAll.getTime());
+        if ("待发货".equals(orderAll.getOrderStatus())) {
+            if (mRelativeTi.getVisibility() != View.VISIBLE) {
+                mRelativeGet.setVisibility(View.VISIBLE);
+            }
+        }
 
 
+    }
+
+    @Override
+    public View getTextView() {
+        return mRelativeGet;
+    }
+
+    @Override
+    public void setTiVisable() {
+        mRelativeTi.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public LoadingPager getLodapger() {
+        return mLoadpager;
     }
 }

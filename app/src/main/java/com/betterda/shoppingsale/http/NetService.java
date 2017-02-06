@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.http;
 
 import com.betterda.shoppingsale.javabean.BaseCallModel;
 import com.betterda.shoppingsale.javabean.UserInfo;
+import com.betterda.shoppingsale.javabean.OrderAll;
 import com.betterda.shoppingsale.shouye.model.LunBoTu;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.wallet.model.BankCard;
@@ -115,5 +116,82 @@ public interface NetService {
                                                          @Field("token") String token
     );
 
+
+    /**
+     * 获取订单列表
+     *
+     * @param account
+     * @param token
+     * @param orderStatus 订单状态
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDER)
+    Observable<BaseCallModel<List<OrderAll>>> getOrder(@Field("account") String account,
+                                                       @Field("token") String token,
+                                                       @Field("orderStatus") String orderStatus,
+                                                       @Field("pageNo") String pageNo,
+                                                       @Field("pageSize") String pageSize
+    );
+
+    /**
+     * 获取订单详情
+     *
+     * @param account
+     * @param token
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDERDETAIL)
+    Observable<BaseCallModel<OrderAll>> getOrderDetail(@Field("account") String account,
+                                                           @Field("token") String token,
+                                                           @Field("orderNum") String orderId
+    );
+    /**
+     * 立即发货
+     *
+     * @param account
+     * @param token
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDERDETAIL)
+    Observable<BaseCallModel<String>> publish(@Field("account") String account,
+                                                           @Field("token") String token,
+                                                           @Field("orderNum") String orderId
+    );
+
+    /**
+     * 确认自提
+     *
+     * @param account
+     * @param token
+     * @param orderId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_COMFIRMZITI)
+    Observable<BaseCallModel<String>> comfirmZiti(@Field("account") String account,
+                                                           @Field("token") String token,
+                                                           @Field("barCode") String barCode,
+                                                           @Field("orderNum") String orderId
+    );
+    /**
+     * 根据自提码获取订单号
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDERNUM)
+    Observable<BaseCallModel<String>> comfirmZiti(@Field("account") String account,
+                                                           @Field("token") String token,
+                                                           @Field("barCode") String barCode
+    );
 
 }

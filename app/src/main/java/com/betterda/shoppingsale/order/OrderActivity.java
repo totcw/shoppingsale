@@ -18,6 +18,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * 订单
  * Created by Administrator on 2016/12/28.
  */
 
@@ -75,5 +76,10 @@ public class OrderActivity extends BaseActivity<OrderContract.Presenter> impleme
         mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
+    }
+
+    @Override
+    public LoadingPager getLodapger() {
+        return mLoadingpager;
     }
 }
