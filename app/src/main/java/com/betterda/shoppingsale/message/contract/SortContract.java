@@ -17,6 +17,8 @@ public interface View extends IView{
 
 public interface Presenter extends IPresenter<View>{
     RecyclerView.Adapter getRvAdapter();
+
+    void getData();
 }
 
 public interface Model extends IModel{

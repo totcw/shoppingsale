@@ -1,9 +1,11 @@
 package com.betterda.shoppingsale.shouye;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +16,25 @@ import android.widget.ScrollView;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.Utils.StatusBarCompat;
+import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseFragment;
+import com.betterda.shoppingsale.http.MyObserver;
+import com.betterda.shoppingsale.http.NetWork;
+import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.ScanStock;
 import com.betterda.shoppingsale.order.OrderActivity;
 import com.betterda.shoppingsale.shouye.adapter.LunBoTuAdapter;
 import com.betterda.shoppingsale.shouye.contract.ShouYeContract;
 import com.betterda.shoppingsale.shouye.presenter.ShouYePresenterImpl;
 import com.betterda.shoppingsale.stock.StockActivity;
+import com.betterda.shoppingsale.utils.GsonTools;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.ziti.ZiTiActivity;
+import com.betterda.shoppingsale.zxing.CaptureActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +92,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
         initLunbotu();
         //加载第二区域
         initSecond();
+
     }
 
     @Override
@@ -105,9 +118,11 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                 startToOrder("待收货");
                 break;
             case R.id.linear_second3://全部订单
-                startToOrder("全部订单");
+                startToOrder(null);
                 break;
             case R.id.linear_second4://扫码入库
+                Intent intent = new Intent(getmActivity(), CaptureActivity.class);
+                UiUtils.startIntentForResult(getmActivity(),intent,0);
                 break;
             case R.id.linear_second5://商品库存
                 UiUtils.startIntent(getmActivity(), StockActivity.class);
@@ -150,7 +165,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
      */
     private void startToOrder(String type) {
         Intent intent = new Intent(getmActivity(), OrderActivity.class);
-        intent.putExtra("type",type);
+        intent.putExtra("orderStatus",type);
         UiUtils.startIntent(getmActivity(),intent);
     }
 
@@ -174,5 +189,62 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
         return mVpLunbotu;
     }
 
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Activity.RESULT_OK == resultCode) {
+            if (requestCode == 0) {
+
+                if (data != null) {
+                    String result = data.getStringExtra("result");
+                    if (!TextUtils.isEmpty(result)) {
+                        //提交扫描的json 信息给后台去入库
+                        getData(result);
+                    } else {
+                        UiUtils.showToast(getmActivity(), "扫描失败");
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void getData(final String result) {
+  /*      ScanStock scanStock = new ScanStock();
+        scanStock.setProductId("402881e859818b18015981fa8ffa0007");
+        scanStock.setQuantity("10");
+        ScanStock scanStock2 = new ScanStock();
+        scanStock2.setProductId("402881e859904962015990bf3f1c0002");
+        scanStock2.setQuantity("5");
+        List<ScanStock> list = new ArrayList<>();
+        list.add(scanStock);
+        list.add(scanStock2);*/
+        getRxManager().add(NetWork.getNetService()
+                .scanStock(getAccount(),getToken(),result)
+                .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                .subscribe(new MyObserver<String>() {
+                    @Override
+                    protected void onSuccess(String data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("扫描入库:"+result);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("扫描入库fail:"+resultMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onExit() {
+
+                    }
+                }));
+    }
 
 }

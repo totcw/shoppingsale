@@ -1,12 +1,19 @@
 package com.betterda.shoppingsale.message.presenter;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BasePresenter;
+import com.betterda.shoppingsale.http.MyObserver;
+import com.betterda.shoppingsale.http.NetWork;
+import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.MeassageType;
 import com.betterda.shoppingsale.message.MeassageActivity;
 import com.betterda.shoppingsale.message.contract.SortContract;
-import com.betterda.shoppingsale.message.model.Meassage;
+
+import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
@@ -19,12 +26,12 @@ import java.util.List;
 */
 
 public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContract.Model> implements SortContract.Presenter{
-    private List<Meassage> meassageList;
-    private CommonAdapter<Meassage> meassageCommonAdapter;
+    private List<MeassageType> meassageList;
+    private CommonAdapter<MeassageType> meassageCommonAdapter;
 
     @Override
     public void start() {
-        getData();
+
     }
 
 
@@ -33,14 +40,19 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
     @Override
     public RecyclerView.Adapter getRvAdapter() {
         meassageList = new ArrayList<>();
-        meassageCommonAdapter = new CommonAdapter<Meassage>(getView().getmActivity(), R.layout.item_rv_meassage,meassageList) {
+        meassageCommonAdapter = new CommonAdapter<MeassageType>(getView().getmActivity(), R.layout.item_rv_meassage,meassageList) {
             @Override
-            public void convert(ViewHolder holder, Meassage meassage) {
+            public void convert(ViewHolder holder, final MeassageType meassage) {
                 if (meassage != null) {
+                    holder.setText(R.id.tv_item_meassage_title, meassage.getMsgType());
+                    holder.setText(R.id.tv_item_meassage_time, meassage.getMsgTime());
+                    holder.setText(R.id.tv_item_meassage_content, meassage.getTitle());
                     holder.setOnClickListener(R.id.linear_item_rv_meassage, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            UiUtils.startIntent(getView().getmActivity(), MeassageActivity.class);
+                            Intent in = new Intent(getView().getmActivity(), MeassageActivity.class);
+                            in.putExtra("msgType", meassage.getMsgType());
+                            UiUtils.startIntent(getView().getmActivity(), in);
                         }
                     });
                 }
@@ -50,11 +62,42 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
         return meassageCommonAdapter;
     }
 
-    private void getData() {
-        for (int i = 0; i <3 ; i++) {
-            meassageList.add(new Meassage());
-        }
-        meassageCommonAdapter.notifyDataSetChanged();
+    public void getData() {
+        NetworkUtils.isNetWork(getView().getmActivity(), getView().getLodapger(), new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                getView().getRxManager().add(NetWork.getNetService()
+                .getMeassageType(getView().getAccount(),getView().getToken())
+                .compose(NetWork.handleResult(new BaseCallModel<List<MeassageType>>()))
+                .subscribe(new MyObserver<List<MeassageType>>() {
+                    @Override
+                    protected void onSuccess(List<MeassageType> data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("消息类型success:"+data);
+                        }
+                        if (data != null) {
+                            if (meassageList != null && meassageCommonAdapter != null) {
+
+                                meassageList.addAll(data);
+                                meassageCommonAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("消息类型fail:"+resultMsg);
+                        }
+                    }
+
+                    @Override
+                    public void onExit() {
+
+                    }
+                }));
+            }
+        });
     }
 
 

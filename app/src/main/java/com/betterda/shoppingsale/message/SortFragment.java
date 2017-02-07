@@ -42,6 +42,8 @@ public class SortFragment extends BaseFragment<SortContract.Presenter> implement
         super.onHiddenChanged(hidden);
         if (hidden) {//隐藏
         } else {
+            System.out.println("show");
+            getPresenter().getData();
             StatusBarCompat.setStatusBar5(getmActivity(),R.color.white);
         }
     }
@@ -57,6 +59,7 @@ public class SortFragment extends BaseFragment<SortContract.Presenter> implement
         mTopbarMessage.setTitle("消息中心");
         mTopbarMessage.setBackVisibility(false);
         initRv();
+        System.out.println("init");
     }
 
     private void initRv() {
@@ -66,4 +69,8 @@ public class SortFragment extends BaseFragment<SortContract.Presenter> implement
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
     }
 
+    @Override
+    public LoadingPager getLodapger() {
+        return mLoadingpager;
+    }
 }

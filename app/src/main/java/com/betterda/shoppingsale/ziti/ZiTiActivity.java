@@ -1,16 +1,23 @@
 package com.betterda.shoppingsale.ziti;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.xrecycleview.XRecyclerView;
+import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.http.MyObserver;
+import com.betterda.shoppingsale.http.NetWork;
+import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.order.OrderDetailActivity;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.widget.NormalTopBar;
@@ -99,6 +106,42 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
         });
 
         setUpPopupWindow(view1,mRelativeAdd, UtilMethod.dip2px(getmActivity(),110),UtilMethod.dip2px(getmActivity(),96));
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (Activity.RESULT_OK == resultCode) {
+            if (requestCode == 0) {
+
+                if (data != null) {
+                    String result = data.getStringExtra("result");
+                    if (!TextUtils.isEmpty(result)) {
+                        getData(result);
+                    } else {
+                        UiUtils.showToast(getmActivity(), "扫描失败");
+                    }
+
+                }
+            }
+        }
+    }
+
+    /**
+     * 解析二维码获取到自提码和订单号
+     * @param result
+     */
+    private void getData( String result) {
+        if (TextUtils.isEmpty(result)) {
+            String[] split = result.split(",");
+            if (split != null && split.length > 1) {
+                Intent intent = new Intent(getmActivity(), OrderDetailActivity.class);
+                intent.putExtra("orderId", split[1]);
+                intent.putExtra("barcode", split[0]);
+                UiUtils.startIntent(getmActivity(), intent);
+            }
+        }
     }
 
     @Override

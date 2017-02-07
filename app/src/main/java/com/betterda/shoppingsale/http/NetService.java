@@ -1,8 +1,12 @@
 package com.betterda.shoppingsale.http;
 
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.MeassageContent;
+import com.betterda.shoppingsale.javabean.MeassageType;
+import com.betterda.shoppingsale.javabean.Stock;
 import com.betterda.shoppingsale.javabean.UserInfo;
 import com.betterda.shoppingsale.javabean.OrderAll;
+
 import com.betterda.shoppingsale.shouye.model.LunBoTu;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.wallet.model.BankCard;
@@ -41,8 +45,7 @@ public interface NetService {
      */
     @FormUrlEncoded
     @POST(Constants.Url.URL_LOGIN)
-    Observable<BaseCallModel<UserInfo>> getLoginThree(@Field("account") String account,@Field("type") String type);
-
+    Observable<BaseCallModel<UserInfo>> getLoginThree(@Field("account") String account, @Field("type") String type);
 
 
     /**
@@ -147,9 +150,10 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_ORDERDETAIL)
     Observable<BaseCallModel<OrderAll>> getOrderDetail(@Field("account") String account,
-                                                           @Field("token") String token,
-                                                           @Field("orderNum") String orderId
+                                                       @Field("token") String token,
+                                                       @Field("orderNum") String orderId
     );
+
     /**
      * 立即发货
      *
@@ -161,8 +165,8 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_ORDERDETAIL)
     Observable<BaseCallModel<String>> publish(@Field("account") String account,
-                                                           @Field("token") String token,
-                                                           @Field("orderNum") String orderId
+                                              @Field("token") String token,
+                                              @Field("orderNum") String orderId
     );
 
     /**
@@ -176,10 +180,11 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_COMFIRMZITI)
     Observable<BaseCallModel<String>> comfirmZiti(@Field("account") String account,
-                                                           @Field("token") String token,
-                                                           @Field("barCode") String barCode,
-                                                           @Field("orderNum") String orderId
+                                                  @Field("token") String token,
+                                                  @Field("barCode") String barCode,
+                                                  @Field("orderNum") String orderId
     );
+
     /**
      * 根据自提码获取订单号
      *
@@ -190,8 +195,79 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_GET_ORDERNUM)
     Observable<BaseCallModel<String>> comfirmZiti(@Field("account") String account,
-                                                           @Field("token") String token,
-                                                           @Field("barCode") String barCode
+                                                  @Field("token") String token,
+                                                  @Field("barCode") String barCode
     );
+
+    /**
+     * 发货
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_ORDERSEND)
+    Observable<BaseCallModel<String>> sendOrder(@Field("account") String account,
+                                                @Field("token") String token,
+                                                @Field("orderNum") String barCode
+    );
+
+    /**
+     * 扫码入库
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_SCANSTOCK)
+    Observable<BaseCallModel<String>> scanStock(@Field("account") String account,
+                                                @Field("token") String token,
+                                                @Field("jsonData") String jsonData
+    );
+
+    /**
+     * 商品库存
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_STOCK)
+    Observable<BaseCallModel<List<Stock>>> stock(@Field("account") String account,
+                                                 @Field("token") String token
+    );
+
+    /**
+     * 获取消息列表
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_MEASSAGELIST)
+    Observable<BaseCallModel<List<MeassageContent>>> getMeassageList(@Field("account") String account,
+                                                                     @Field("token") String token,
+                                                                     @Field("msgType") String msgType,
+                                                                     @Field("pageNo") String pageNo,
+                                                                     @Field("pageSize") String pageSize
+    );
+
+    /**
+     * 获取消息类型
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_MEASSAGETYPE)
+    Observable<BaseCallModel<List<MeassageType>>> getMeassageType(@Field("account") String account,
+                                                                  @Field("token") String token
+    );
+
 
 }

@@ -65,4 +65,9 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
 
     }
+
+    @Override
+    public LoadingPager getLodapger() {
+        return mLoadingpager;
+    }
 }

@@ -24,9 +24,14 @@ public class Constants {
         public static final String URL_PWD_UPDATE = "";
         public static final String URL_LUNBO = URL+"appAPI.do?api/indeximages/get";//轮播广告
         public static final String URL_GET_ORDER = "appAPI.do?api/merchant/order/get";//获取订单
+        public static final String URL_ORDERSEND = "appAPI.do?api/merchant/deliver";//发货
         public static final String URL_GET_ORDERDETAIL = "appAPI.do?api/merchant/orderDetail/get";//订单详情
         public static final String URL_GET_COMFIRMZITI = "appAPI.do?api/order/product/provide";//确认自提
         public static final String URL_GET_ORDERNUM = "appAPI.do?api/barCode/scan";//根据自提码获取订单号
+        public static final String URL_SCANSTOCK = "appAPI.do?api/merchant/inventory/add";//扫码入库
+        public static final String URL_STOCK = "appAPI.do?api/merchant/inventory/get";//商品库存
+        public static final String URL_GET_MEASSAGELIST = "appAPI.do?api/messageList/get";//获取消息列表
+        public static final String URL_GET_MEASSAGETYPE = "appAPI.do?api/messageType/get";//获取消息类型
     }
 
     public class WeiXin {

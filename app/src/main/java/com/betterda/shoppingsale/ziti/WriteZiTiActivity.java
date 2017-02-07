@@ -1,5 +1,6 @@
 package com.betterda.shoppingsale.ziti;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.betterda.shoppingsale.base.IPresenter;
 import com.betterda.shoppingsale.http.MyObserver;
 import com.betterda.shoppingsale.http.NetWork;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.order.OrderDetailActivity;
 import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.widget.NormalTopBar;
@@ -77,7 +79,11 @@ public class WriteZiTiActivity extends BaseActivity {
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("通过自提码获取订单号success:"+data);
                                 }
-                                //TODO 去订单详情
+                                Intent intent = new Intent(getmActivity(), OrderDetailActivity.class);
+                                intent.putExtra("orderId", data);
+                                intent.putExtra("barcode", barcode);
+                                UiUtils.startIntent(getmActivity(), intent);
+                                finish();
                             }
 
                             @Override
