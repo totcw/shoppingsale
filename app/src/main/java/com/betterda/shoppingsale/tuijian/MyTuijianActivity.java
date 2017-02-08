@@ -7,9 +7,9 @@ import android.widget.TextView;
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.javabean.TuiJian;
 import com.betterda.shoppingsale.tuijian.contract.MyTuijianContract;
 import com.betterda.shoppingsale.tuijian.presenter.MyTuijianPresenterImpl;
-import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 
 
@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
- * 我的会员
+ * 我的推荐
  * Created by Administrator on 2016/12/20.
  */
 
@@ -25,11 +25,11 @@ public class MyTuijianActivity extends BaseActivity<MyTuijianContract.Presenter>
     @BindView(R.id.topbar_wallet)
     NormalTopBar mTopbarWallet;
     @BindView(R.id.tv_wallet_jinbi)
-    TextView mTvWalletJinbi;//会员返现
+    TextView mTvWalletJinbi;//推荐返现
     @BindView(R.id.relative_wallet_jinbi)
     RelativeLayout mRelativeWalletJinbi;
     @BindView(R.id.tv_wallet_yinbi)
-    TextView mTvWalletYinbi; //会员人数
+    TextView mTvWalletYinbi; //推荐人数
     @BindView(R.id.relative_wallet_yinbi)
     RelativeLayout mRelativeWalletYinbi;
     @BindView(R.id.loadpager_wallet)
@@ -49,14 +49,14 @@ public class MyTuijianActivity extends BaseActivity<MyTuijianContract.Presenter>
     @Override
     public void init() {
         super.init();
-        mTopbarWallet.setTitle("我的会员");
+        mTopbarWallet.setTitle("我的推荐");
     }
 
     @OnClick({R.id.relative_wallet_jinbi, R.id.relative_wallet_yinbi,R.id.bar_back})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.relative_wallet_jinbi://推荐返现
-                UiUtils.startIntent(getmActivity(),TuiJianFanxianActivity.class);
+                getPresenter().fanxian();
                 break;
             case R.id.relative_wallet_yinbi://推荐人数
                 break;
@@ -64,5 +64,11 @@ public class MyTuijianActivity extends BaseActivity<MyTuijianContract.Presenter>
                 back();
                 break;
         }
+    }
+
+    @Override
+    public void setValue(TuiJian data) {
+        mTvWalletJinbi.setText("￥"+data.getHeapCashback());
+        mTvWalletYinbi.setText(data.getNumber()+"人");
     }
 }

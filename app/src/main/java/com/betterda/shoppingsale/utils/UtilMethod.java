@@ -402,6 +402,17 @@ public class UtilMethod {
         return a;
     }
 
+    public static void setLoadpagerError(LoadingPager loadpagerError) {
+        if (loadpagerError != null) {
+            loadpagerError.setErrorVisable();
+        }
+    }
+
+    public static void setLoadpagerHide(LoadingPager loadpagerError) {
+        if (loadpagerError != null) {
+            loadpagerError.hide();
+        }
+    }
 
 
 }

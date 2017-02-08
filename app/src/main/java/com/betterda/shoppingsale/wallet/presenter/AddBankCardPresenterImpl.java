@@ -26,7 +26,7 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
 
     @Override
     public void start() {
-        dialog = UiUtils.createDialog(getView().getmActivity(), "正在上传...");
+        dialog = UiUtils.createDialog(getView().getmActivity(), "正在提交...");
     }
 
 
@@ -45,7 +45,7 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
         number = getView().getNumber();
 
         if (TextUtils.isEmpty(truename)) {
-            UiUtils.showToast( getView().getmActivity(),"持卡人姓名不能为空");
+            UiUtils.showToast(getView().getmActivity(), "持卡人姓名不能为空");
             return;
         }
         if (TextUtils.isEmpty(identitycard)) {
@@ -53,15 +53,15 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
             return;
         }
         if (TextUtils.isEmpty(bank)) {
-            UiUtils.showToast(getView().getmActivity(),"请选择所属银行");
+            UiUtils.showToast(getView().getmActivity(), "请选择所属银行");
             return;
         }
         if (TextUtils.isEmpty(cardnum)) {
-            UiUtils.showToast(getView().getmActivity(),"银行卡号不能为空");
+            UiUtils.showToast(getView().getmActivity(), "银行卡号不能为空");
             return;
         }
         if (TextUtils.isEmpty(number)) {
-            UiUtils.showToast(getView().getmActivity(),"预留手机号码不能为空");
+            UiUtils.showToast(getView().getmActivity(), "预留手机号码不能为空");
             return;
         }
 
@@ -70,7 +70,7 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
             public void getDataApi() {
                 UiUtils.showDialog(getView().getmActivity(), dialog);
                 NetWork.getNetService()
-                        .getBandAdd("account","token",truename,identitycard,bank,cardnum,number)
+                        .getBandAdd(getView().getAccount(),getView().getToken(),truename,identitycard,bank,cardnum,number)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override

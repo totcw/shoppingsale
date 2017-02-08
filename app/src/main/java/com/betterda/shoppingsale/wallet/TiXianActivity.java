@@ -1,7 +1,6 @@
 package com.betterda.shoppingsale.wallet;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -9,15 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.data.BankData;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.wallet.contract.TiXianContract;
 import com.betterda.shoppingsale.wallet.presenter.TiXianPresenterImpl;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -90,7 +90,9 @@ public class TiXianActivity extends BaseActivity<TiXianContract.Presenter> imple
         if (requestCode == 0 && data != null) {
             String bank = data.getStringExtra("bank");
             String bankCrad = data.getStringExtra("bankCard");
-            getPresenter().setBank(bank, bankCrad);
+            String id = data.getStringExtra("id");
+            getPresenter().setBank(bank, id);
+
             if (relativeTixianChose != null) {
                 relativeTixianChose.setVisibility(View.INVISIBLE);
             }
@@ -102,12 +104,23 @@ public class TiXianActivity extends BaseActivity<TiXianContract.Presenter> imple
                 mTvTixianBankcard.setText(bankCrad);
 
             }
+            if (mIvTixianIcon != null) {
+                if (BankData.getBank(bank) != -1) {
+                    mIvTixianIcon.setImageResource(BankData.getBank(bank));
+                }
+
+            }
         }
     }
 
     @Override
     public String getMoney() {
         return mEtTixianMoney.getText().toString().trim();
+    }
+
+    @Override
+    public TextView getTvBalance() {
+        return mTvYrtixianMoney;
     }
 
 }

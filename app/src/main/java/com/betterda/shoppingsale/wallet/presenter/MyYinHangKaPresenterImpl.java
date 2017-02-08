@@ -13,11 +13,11 @@ import com.betterda.shoppingsale.http.MyObserver;
 import com.betterda.shoppingsale.http.NetWork;
 import com.betterda.shoppingsale.javabean.BankCard;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.utils.GsonTools;
 import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.wallet.contract.MyYinHangKaContract;
-
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
@@ -32,16 +32,23 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
     private List<BankCard> mBankCardList;
     private CommonAdapter<BankCard> mBankCardCommonAdapter;
     private ShapeLoadingDialog dialog;
-
     private boolean isChose;//是否是要选择银行卡
+
 
     @Override
     public void start() {
+        init();
+        getData();
+    }
+
+    /**
+     * 初始化数据
+     */
+    private void init() {
         Intent intent = getView().getmActivity().getIntent();
         if (intent != null) {
             isChose=  intent.getBooleanExtra("tixian", false);
         }
-        getData();
     }
 
 
@@ -82,13 +89,13 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                             if (isChose) {
                                 Intent intent = new Intent();
                                 intent.putExtra("bank", bankCard.getBank());
-                                intent.putExtra("bankCrad",bankCard.getCardNum());
+                                intent.putExtra("bankCard",bankCard.getCardNum());
+                                intent.putExtra("id",bankCard.getId());
                                 getView().getmActivity().setResult(0,intent);
                                 getView().getmActivity().finish();
                             }
                         }
                     });
-
                 }
             }
         };
@@ -115,8 +122,10 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                 UiUtils.showDialog(getView().getmActivity(), dialog);
                 if (mBankCardList != null ) {
                     if (bankCard != null) {
+                        List<String> list = new ArrayList<String>();
+                        list.add(bankCard.getId());
                         getView().getRxManager().add(NetWork.getNetService()
-                                .getBandDelete("", "", bankCard.getId())
+                                .getBandDelete(getView().getAccount(), getView().getToken(), GsonTools.getJsonListString(list))
                                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                 .subscribe(new MyObserver<String>() {
                                     @Override
@@ -129,7 +138,7 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                                         if (mBankCardCommonAdapter != null) {
                                             mBankCardCommonAdapter.notifyDataSetChanged();
                                         }
-                                        UtilMethod.hideOrEmpty(mBankCardList, getView().getLoadpager());
+                                        UtilMethod.hideOrEmpty(mBankCardList,getView().getLodapger());
                                         //取消进度显示
                                         UiUtils.dissmissDialog(getView().getmActivity(), dialog);
 
@@ -157,10 +166,36 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
         });
     }
 
+    /**
+     * 获取银行卡列表
+     */
     private void getData() {
-        for (int i = 0; i < 3; i++) {
-            mBankCardList.add(new BankCard());
-        }
+
+        getView().getRxManager().add(NetWork.getNetService()
+        .getBandGet(getView().getAccount(),getView().getToken())
+        .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
+        .subscribe(new MyObserver<List<BankCard>>() {
+                    @Override
+                    protected void onSuccess(List<BankCard> data, String resultMsg) {
+                        if (data != null) {
+                            mBankCardList.addAll(data);
+                            mBankCardCommonAdapter.notifyDataSetChanged();
+                        }
+
+                        UtilMethod.hideOrEmpty(data,getView().getLodapger());
+                    }
+
+                    @Override
+                    public void onFail(String resultMsg) {
+                        UtilMethod.setLoadpagerError(getView().getLodapger());
+                    }
+
+                    @Override
+                    public void onExit() {
+
+                    }
+                })
+        );
     }
 
     @Override

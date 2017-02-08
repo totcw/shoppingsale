@@ -1,5 +1,8 @@
 package com.betterda.shoppingsale.wallet;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +33,7 @@ public class CashWalletActivity extends BaseActivity<CashWalletContract.Presente
     public RelativeLayout mRelativeWallet2Chongzhi;
     @BindView(R.id.loadpager_cashwallet)
     public LoadingPager mLoadpagerCashwallet;
+    public String money;
 
     @Override
     protected CashWalletContract.Presenter onLoadPresenter() {
@@ -48,19 +52,41 @@ public class CashWalletActivity extends BaseActivity<CashWalletContract.Presente
         mTopbarCashwallet.setTitle("现金钱包");
         mTopbarCashwallet.setActionText("明细");
         mTopbarCashwallet.setActionTextVisibility(true);
+        Intent intent = getIntent();
+        if (intent != null) {
+          money =  intent.getStringExtra("money");
+        }
+        mTvWallet2Money.setText(money);
     }
 
-    @OnClick({R.id.relative_wallet2_chongzhi, R.id.bar_back, R.id.bar_action})
+    @OnClick({R.id.relative_wallet2_chongzhi, R.id.bar_back, R.id.bar_action,R.id.tv_cashwallet_shouming})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
                 back();
                 break;
             case R.id.bar_action:
-                UiUtils.startIntent(getmActivity(),MingXiActivity.class);
+                Intent intent = new Intent(getmActivity(), MingXiActivity.class);
+                intent.putExtra("type", "现金钱包");
+                UiUtils.startIntent(getmActivity(),intent);
                 break;
             case R.id.relative_wallet2_chongzhi://提现
-                UiUtils.startIntent(getmActivity(),TiXianActivity.class);
+                Intent intent2 = new Intent(getmActivity(), TiXianActivity.class);
+                intent2.putExtra("money", money);
+                UiUtils.startIntent(getmActivity(),intent2);
+                break;
+            case R.id.tv_cashwallet_shouming://说明
+                AlertDialog.Builder builder = new AlertDialog.Builder(getmActivity());
+                builder.setTitle("现金钱包说明")
+                        .setMessage("现金钱包是可以提现的")
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                builder.show();
                 break;
         }
 

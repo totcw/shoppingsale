@@ -1,6 +1,7 @@
 package com.betterda.shoppingsale.tuijian.contract;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 
 import com.betterda.shoppingsale.base.IModel;
@@ -18,6 +19,10 @@ public class LiJiTuijianContract {
 
     public interface View extends IView {
         void close();
+
+        android.view.View getImageview();
+
+        void setUrl(String s);
     }
 
     public interface Presenter extends IPresenter<View> {
