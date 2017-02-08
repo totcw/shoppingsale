@@ -1,6 +1,7 @@
 package com.betterda.shoppingsale.wallet.model;
 
 
+import com.betterda.shoppingsale.javabean.MingXi;
 import com.betterda.shoppingsale.javabean.TitleBean;
 import com.betterda.shoppingsale.wallet.contract.MingXiContract;
 

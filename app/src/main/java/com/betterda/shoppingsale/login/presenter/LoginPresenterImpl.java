@@ -68,6 +68,7 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
                                // CacheUtils.putString(getView().getmActivity(), data.getAccount() + Constants.Cache.TOUXIANG, data.getPhoto());
                                 UiUtils.startIntent(getView().getmActivity(), MainActivity.class);
                                 getView().getmActivity().finish();
+                                UiUtils.showToast(getView().getmActivity(),resultMsg);
                             } else {
                                 UiUtils.showToast(getView().getmActivity(), "登录失败,获取信息失败");
                             }
@@ -75,12 +76,17 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
 
                         @Override
                         public void onFail(String resultMsg) {
+                            if (BuildConfig.LOG_DEBUG) {
+                                System.out.println("登录fa:" + resultMsg);
+                            }
                                 UiUtils.showToast(getView().getmActivity(),resultMsg);
                         }
 
                         @Override
                         public void onExit() {
-
+                            if (BuildConfig.LOG_DEBUG) {
+                                System.out.println("token" );
+                            }
                         }
                     }));
 

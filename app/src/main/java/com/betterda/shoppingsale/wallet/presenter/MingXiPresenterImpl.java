@@ -4,9 +4,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BasePresenter;
+import com.betterda.shoppingsale.javabean.MingXi;
 import com.betterda.shoppingsale.javabean.TitleBean;
 import com.betterda.shoppingsale.wallet.contract.MingXiContract;
-import com.betterda.shoppingsale.wallet.model.MingXi;
+
 import com.betterda.shoppingsale.wallet.model.MingXiModelImpl;
 import com.betterda.shoppingsale.widget.TitleItemDecoration;
 import com.zhy.base.adapter.ViewHolder;

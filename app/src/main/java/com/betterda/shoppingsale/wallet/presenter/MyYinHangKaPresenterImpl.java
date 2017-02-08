@@ -11,12 +11,13 @@ import com.betterda.shoppingsale.base.BasePresenter;
 import com.betterda.shoppingsale.data.BankData;
 import com.betterda.shoppingsale.http.MyObserver;
 import com.betterda.shoppingsale.http.NetWork;
+import com.betterda.shoppingsale.javabean.BankCard;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
 import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.wallet.contract.MyYinHangKaContract;
-import com.betterda.shoppingsale.wallet.model.BankCard;
+
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 

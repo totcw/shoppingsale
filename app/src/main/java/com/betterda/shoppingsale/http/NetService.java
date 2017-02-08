@@ -1,22 +1,30 @@
 package com.betterda.shoppingsale.http;
 
+import com.betterda.shoppingsale.javabean.BankCard;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
 import com.betterda.shoppingsale.javabean.MeassageContent;
 import com.betterda.shoppingsale.javabean.MeassageType;
+import com.betterda.shoppingsale.javabean.MingXi;
 import com.betterda.shoppingsale.javabean.Stock;
+import com.betterda.shoppingsale.javabean.TuiJian;
 import com.betterda.shoppingsale.javabean.UserInfo;
 import com.betterda.shoppingsale.javabean.OrderAll;
 
+import com.betterda.shoppingsale.javabean.Wallet;
 import com.betterda.shoppingsale.shouye.model.LunBoTu;
 import com.betterda.shoppingsale.utils.Constants;
-import com.betterda.shoppingsale.wallet.model.BankCard;
+
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import rx.Observable;
 
 /**
@@ -58,7 +66,29 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_PWD_UPDATE)
     Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
-                                                   @Field("password") String password);
+                                                   @Field("password") String password,
+                                                   @Field("accountType") String accountType
+                                                   );
+
+    /**
+     * 注册
+     *
+     * @param account
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_REGISTER)
+    Observable<BaseCallModel<String>> getRegister(@Field("account") String account,
+                                                   @Field("shopName") String shopName,
+                                                   @Field("legalPerson") String legalPerson,
+                                                   @Field("province") String province,
+                                                   @Field("city") String city,
+                                                   @Field("area") String area,
+                                                   @Field("addressDetail") String addressDetail,
+                                                   @Field("businessLicense") String businessLicense,
+                                                   @Field("idCardPositive") String idCardPositive,
+                                                   @Field("idCardBack") String idCardBack
+                                                  );
 
 
     /**
@@ -270,4 +300,106 @@ public interface NetService {
     );
 
 
+    /**
+     * 图片上传
+     *
+     * @param account
+     * @param token
+     * @param file
+     * @return
+     */
+    @Multipart
+    @POST(Constants.Url.URL_UPLOAD)
+    Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
+                                                   @Part("token") RequestBody token,
+                                                   @Part MultipartBody.Part file
+    );
+
+    /**
+     * 获取钱包
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_WALLET)
+    Observable<BaseCallModel<Wallet>> getWallet(@Field("account") String account,
+                                                @Field("token") String token
+    );
+
+    /**
+     * 获取钱包明细
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_WALLETMINGXI)
+    Observable<BaseCallModel<List<MingXi>>> getWalletMingXi(@Field("account") String account,
+                                                            @Field("token") String token,
+                                                            @Field("wateType") String wateType
+    );
+
+    /**
+     * 提现
+     *
+     * @param account
+     * @param token
+     * @param money   提现金额
+     * @param bankId  银行卡id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_CASH)
+    Observable<BaseCallModel<String>> getCash(@Field("account") String account,
+                                              @Field("token") String token,
+                                              @Field("money") String money,
+                                              @Field("bankId") String bankId
+    );
+
+
+
+
+    /**
+     * 获取推荐的人数和返现金额
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_FANXIANMONEY)
+    Observable<BaseCallModel<TuiJian>> getTuijianmenber(@Field("account") String account,
+                                                        @Field("token") String token
+    );
+
+    /**
+     * 立即推荐
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_TUIJIAN)
+    Observable<BaseCallModel<String>> Tuijian(@Field("account") String account,
+                                              @Field("token") String token
+    );
+
+    /**
+     * 获取推荐返现的交易明细
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_TUIJIAN_MINGXI)
+    Observable<BaseCallModel<List<MingXi>>> getTuijianMingxi(@Field("account") String account,
+                                                             @Field("token") String token,
+                                                             @Field("pageNo") String pageNo,
+                                                             @Field("pageSize") String pageSize
+    );
 }

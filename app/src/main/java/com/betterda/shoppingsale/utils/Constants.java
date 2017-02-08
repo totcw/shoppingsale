@@ -19,9 +19,9 @@ public class Constants {
     public static class Url {
 
         public  final static String URL="http://192.168.1.145:8080/WinePIN/";
-        public static final String URL_REGISTER = " ";
+        public static final String URL_REGISTER = "appAPI.do?api/merchant/register";
         public static final String URL_LOGIN = "appAPI.do?api/merchant/login";
-        public static final String URL_PWD_UPDATE = "";
+        public static final String URL_PWD_UPDATE = "appAPI.do?api/account/update";
         public static final String URL_LUNBO = URL+"appAPI.do?api/indeximages/get";//轮播广告
         public static final String URL_GET_ORDER = "appAPI.do?api/merchant/order/get";//获取订单
         public static final String URL_ORDERSEND = "appAPI.do?api/merchant/deliver";//发货
@@ -32,6 +32,13 @@ public class Constants {
         public static final String URL_STOCK = "appAPI.do?api/merchant/inventory/get";//商品库存
         public static final String URL_GET_MEASSAGELIST = "appAPI.do?api/messageList/get";//获取消息列表
         public static final String URL_GET_MEASSAGETYPE = "appAPI.do?api/messageType/get";//获取消息类型
+        public static final String URL_UPLOAD = "appAPI.do?api/android/img/upload";//上传图片
+        public static final String URL_GET_FANXIANMONEY = "appAPI.do?api/account/recommend/mype/get";//获取推荐返现的金额
+        public static final String URL_TUIJIAN = "appAPI.do?api/account/code/get";//立即推荐
+        public static final String URL_TUIJIAN_MINGXI = "appAPI.do?api/account/recommend/detail/get";//推荐返现明细
+        public static final String URL_GET_WALLET = "appAPI.do?api/account/wallet/get";//我的钱包
+        public static final String URL_GET_WALLETMINGXI = "appAPI.do?api/account/wallet/detail/get";//钱包的交易明细
+        public static final String URL_GET_CASH = "appAPI.do?api/account/cash/withdraw";//提现
     }
 
     public class WeiXin {

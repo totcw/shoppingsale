@@ -44,10 +44,10 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
             UiUtils.showToast(getView().getmActivity(), "手机号不能为空");
             return;
         }
-        if (TextUtils.isEmpty(yzm)) {
+      /*  if (TextUtils.isEmpty(yzm)) {
             UiUtils.showToast(getView().getmActivity(), "验证码不能为空");
             return;
-        }
+        }*/
         if (TextUtils.isEmpty(pwd)) {
             UiUtils.showToast(getView().getmActivity(), "密码不能为空");
             return;
@@ -62,12 +62,12 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
         }
 
         getView().getRxManager().add(NetWork.getNetService()
-                                        .getPwdUpdate(account,pwd)
+                                        .getPwdUpdate(account,pwd,"商户")
                                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                         .subscribe(new MyObserver<String>() {
                                             @Override
                                             protected void onSuccess(String data, String resultMsg) {
-
+                                                    UiUtils.showToast(getView().getmActivity(),resultMsg);
                                             }
 
                                             @Override
