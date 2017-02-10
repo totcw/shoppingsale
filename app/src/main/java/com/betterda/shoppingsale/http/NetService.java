@@ -43,17 +43,9 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_LOGIN)
     Observable<BaseCallModel<UserInfo>> getLogin(@Field("account") String account,
-                                                 @Field("password") String password);
+                                                 @Field("password") String password,
+                                                 @Field("accountType") String accountType);
 
-    /**
-     * 三方登录
-     *
-     * @param account
-     * @return
-     */
-    @FormUrlEncoded
-    @POST(Constants.Url.URL_LOGIN)
-    Observable<BaseCallModel<UserInfo>> getLoginThree(@Field("account") String account, @Field("type") String type);
 
 
     /**
@@ -312,6 +304,7 @@ public interface NetService {
     @POST(Constants.Url.URL_UPLOAD)
     Observable<BaseCallModel<String>> getImgUpload(@Part("account") RequestBody account,
                                                    @Part("token") RequestBody token,
+                                                   @Part("accountType") RequestBody accountType,
                                                    @Part MultipartBody.Part file
     );
 

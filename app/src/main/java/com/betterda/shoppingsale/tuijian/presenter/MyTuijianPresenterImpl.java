@@ -54,7 +54,7 @@ public class MyTuijianPresenterImpl extends BasePresenter<MyTuijianContract.View
 
                             @Override
                             public void onExit() {
-
+                                getView().ExitToLogin();
                             }
                         }));
             }

@@ -29,4 +29,7 @@ public interface IView {
      * @return
      */
     String getToken();
+    //token失效 跳转到登录界面
+    void ExitToLogin();
+
 }

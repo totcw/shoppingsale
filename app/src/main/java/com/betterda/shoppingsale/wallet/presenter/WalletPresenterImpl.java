@@ -46,7 +46,7 @@ public class WalletPresenterImpl extends BasePresenter<WalletContract.View,Walle
 
                         @Override
                         public void onExit() {
-
+                            getView().ExitToLogin();
                         }
                     }));
             }

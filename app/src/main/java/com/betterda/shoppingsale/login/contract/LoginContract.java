@@ -1,6 +1,8 @@
 package com.betterda.shoppingsale.login.contract;
 
 
+import android.widget.EditText;
+
 import com.betterda.shoppingsale.base.IModel;
 import com.betterda.shoppingsale.base.IPresenter;
 import com.betterda.shoppingsale.base.IView;
@@ -18,6 +20,10 @@ public interface View extends IView {
     String getPwd();
 
     boolean isSelectJizhu();
+
+    EditText getTvLogin();
+
+    EditText getTvPwd();
 }
 
 public interface Presenter extends IPresenter<View> {

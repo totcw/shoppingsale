@@ -32,8 +32,9 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
      */
     @Override
     public void login() {
-        String account = getView().getAccount();
-        final String pwd = getView().getPwd();
+        String account = getView().getTvLogin().getText().toString().trim();
+        final String pwd = getView().getTvPwd().getText().toString().trim();
+
         if (TextUtils.isEmpty(account)) {
             UiUtils.showToast(getView().getmActivity(),"帐号不能为空");
             return;
@@ -46,7 +47,7 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
 
         getView().getRxManager()
                 .add(NetWork.getNetService()
-                    .getLogin(account,pwd)
+                    .getLogin(account+"s",pwd,"merchant")
                     .compose(NetWork.handleResult(new BaseCallModel<UserInfo>()))
                     .subscribe(new MyObserver<UserInfo>() {
                         @Override
@@ -92,27 +93,11 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
 
     }
 
+
+
     @Override
     public void loginThree(String s,String uid) {
-        getView().getRxManager().add(NetWork.getNetService()
-        .getLoginThree(uid, s)
-        .compose(NetWork.handleResult(new BaseCallModel<UserInfo>()))
-        .subscribe(new MyObserver<UserInfo>() {
-            @Override
-            protected void onSuccess(UserInfo data, String resultMsg) {
 
-            }
-
-            @Override
-            public void onFail(String resultMsg) {
-
-            }
-
-            @Override
-            public void onExit() {
-
-            }
-        }));
     }
 
     @Override

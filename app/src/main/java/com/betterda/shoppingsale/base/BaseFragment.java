@@ -1,17 +1,21 @@
 package com.betterda.shoppingsale.base;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.utils.CacheUtils;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.RxManager;
+import com.betterda.shoppingsale.utils.UiUtils;
 
 import butterknife.ButterKnife;
 
@@ -23,7 +27,8 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
     private Activity mActivity;
     protected P mPresenter;
     protected RxManager mRxManager;
-
+    private AlertDialog.Builder builder;
+    private boolean isDismiss;//token 失效对话框 是否已经显示
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -120,6 +125,42 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
      */
     public String getToken() {
         return  CacheUtils.getString(getmActivity(), getAccount()+Constants.Cache.TOKEN, "");
+    }
+
+
+    /**
+     * 强制跳转到登录界面
+     */
+    public void ExitToLogin() {
+        if (!isDismiss) {
+            isDismiss = true;
+            if (builder == null) {
+                builder = new AlertDialog.Builder(getmActivity());
+            }
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    isDismiss = false;
+                    builder = null;
+                }
+            });
+
+            builder.setTitle("温馨提示")
+                    .setMessage("您的帐号已在别处登录,请重新登录")
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            //CacheUtils.putBoolean(getmActivity(), Constants.Cache.ISLOGIN, false);
+                            // CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "");
+                            UiUtils.startIntent(getmActivity(), LoginActivity.class);
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+
+
     }
 
     @Override

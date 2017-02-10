@@ -136,7 +136,7 @@ public class LiJiTuijianPresenterImpl extends BasePresenter<LiJiTuijianContract.
 
                             @Override
                             public void onExit() {
-
+                                getView().ExitToLogin();
                             }
                         }));
             }

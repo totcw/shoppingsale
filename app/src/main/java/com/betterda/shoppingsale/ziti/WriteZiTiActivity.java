@@ -95,7 +95,7 @@ public class WriteZiTiActivity extends BaseActivity {
 
                             @Override
                             public void onExit() {
-
+                                ExitToLogin();
                             }
                         }));
             }

@@ -110,7 +110,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
 
                                 @Override
                                 public void onExit() {
-
+                                    getView().ExitToLogin();
                                 }
                             }));
                 }
@@ -156,7 +156,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
 
                                 @Override
                                 public void onExit() {
-
+                                    getView().ExitToLogin();
                                 }
                             }));
                 }

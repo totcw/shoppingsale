@@ -3,9 +3,11 @@ package com.betterda.shoppingsale.base;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -14,6 +16,7 @@ import android.widget.PopupWindow;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.shoppingsale.R;
+import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.utils.CacheUtils;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.PermissionUtil;
@@ -36,7 +39,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     protected P mPresenter;
     protected RxManager mRxManager;
     private PopupWindow popupWindow;
-
+    private AlertDialog.Builder builder;
+    private boolean isDismiss;//token 失效对话框 是否已经显示
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,6 +162,42 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
      */
     public String getToken() {
         return  CacheUtils.getString(getmActivity(), getAccount()+Constants.Cache.TOKEN, "");
+    }
+
+
+    /**
+     * 强制跳转到登录界面
+     */
+    public void ExitToLogin() {
+        if (!isDismiss) {
+            isDismiss = true;
+            if (builder == null) {
+                builder = new AlertDialog.Builder(getmActivity());
+            }
+            builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    isDismiss = false;
+                    builder = null;
+                }
+            });
+
+            builder.setTitle("温馨提示")
+                    .setMessage("您的帐号已在别处登录,请重新登录")
+                    .setNegativeButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            //CacheUtils.putBoolean(getmActivity(), Constants.Cache.ISLOGIN, false);
+                           // CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "");
+                            UiUtils.startIntent(getmActivity(), LoginActivity.class);
+                        }
+                    })
+                    .setCancelable(false)
+                    .show();
+        }
+
+
     }
 
 

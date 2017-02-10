@@ -63,7 +63,7 @@ public class TiXianPresenterImpl extends BasePresenter<TiXianContract.View,TiXia
 
                             @Override
                             public void onExit() {
-
+                                getView().ExitToLogin();
                             }
                         }));
             }

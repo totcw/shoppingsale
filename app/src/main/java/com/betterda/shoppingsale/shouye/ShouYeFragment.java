@@ -242,7 +242,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
 
                     @Override
                     public void onExit() {
-
+                            ExitToLogin();
                     }
                 }));
     }

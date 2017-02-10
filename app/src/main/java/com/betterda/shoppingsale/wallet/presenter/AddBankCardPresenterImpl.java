@@ -69,28 +69,28 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
             @Override
             public void getDataApi() {
                 UiUtils.showDialog(getView().getmActivity(), dialog);
-                NetWork.getNetService()
-                        .getBandAdd(getView().getAccount(),getView().getToken(),truename,identitycard,bank,cardnum,number)
-                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                        .subscribe(new MyObserver<String>() {
-                            @Override
-                            protected void onSuccess(String data, String resultMsg) {
-                                UiUtils.showToast(getView().getmActivity(),resultMsg);
-                                UiUtils.dissmissDialog(getView().getmActivity(),dialog);
-                                getView().getmActivity().finish();
-                            }
+              getView().getRxManager().add(  NetWork.getNetService()
+                      .getBandAdd(getView().getAccount(),getView().getToken(),truename,identitycard,bank,cardnum,number)
+                      .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                      .subscribe(new MyObserver<String>() {
+                          @Override
+                          protected void onSuccess(String data, String resultMsg) {
+                              UiUtils.showToast(getView().getmActivity(),resultMsg);
+                              UiUtils.dissmissDialog(getView().getmActivity(),dialog);
+                              getView().getmActivity().finish();
+                          }
 
-                            @Override
-                            public void onFail(String resultMsg) {
-                                UiUtils.showToast(getView().getmActivity(),resultMsg);
-                                UiUtils.dissmissDialog(getView().getmActivity(),dialog);
-                            }
+                          @Override
+                          public void onFail(String resultMsg) {
+                              UiUtils.showToast(getView().getmActivity(),resultMsg);
+                              UiUtils.dissmissDialog(getView().getmActivity(),dialog);
+                          }
 
-                            @Override
-                            public void onExit() {
-
-                            }
-                        });
+                          @Override
+                          public void onExit() {
+                                getView().ExitToLogin();
+                          }
+                      }));
             }
         });
     }

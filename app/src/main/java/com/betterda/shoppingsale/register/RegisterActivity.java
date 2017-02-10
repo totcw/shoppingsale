@@ -253,6 +253,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
                 //封装普通的string字段
                 RequestBody account = RequestBody.create(MediaType.parse("text/plain"), getAccount());
                 RequestBody token = RequestBody.create(MediaType.parse("text/plain"), getToken());
+                RequestBody merchant = RequestBody.create(MediaType.parse("text/plain"), "merchant");
                 //封装文件
                 RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(goosimg));
 
@@ -261,7 +262,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
                         + ".png", file);
 
                 getRxManager().add(NetWork.getNetService()
-                        .getImgUpload(account,token,filePart)
+                        .getImgUpload(account,token,merchant,filePart)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                         .subscribe(new MyObserver<String>() {
                             @Override

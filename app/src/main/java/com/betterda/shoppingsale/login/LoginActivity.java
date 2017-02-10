@@ -1,6 +1,7 @@
 package com.betterda.shoppingsale.login;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     EditText mEtLoginPwd;
     @BindView(R.id.iv_login_jizhu)
     ImageView mIvJizhu;
+    private String account;
 
 
     @Override
@@ -59,8 +61,12 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         super.init();
         mTopbarLogin.setTitle("登录");
         mTopbarLogin.setBackVisibility(false);
-        String account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
-        String pwd = CacheUtils.getString(getmActivity(), account+Constants.Cache.PWD, "");
+        account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+        String pwd = CacheUtils.getString(getmActivity(), account +Constants.Cache.PWD, "");
+        if (!TextUtils.isEmpty(account)) {
+            int indexOf = account.lastIndexOf("s");
+            account = account.substring(0, indexOf);
+        }
         mEtLoginNumber.setText(account);
         mEtLoginPwd.setText(pwd);
     }
@@ -114,6 +120,16 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
      */
     public boolean isSelectJizhu() {
         return mIvJizhu.isSelected();
+    }
+
+    @Override
+    public EditText getTvLogin() {
+        return mEtLoginNumber;
+    }
+
+    @Override
+    public EditText getTvPwd() {
+        return mEtLoginPwd;
     }
 
     @Override

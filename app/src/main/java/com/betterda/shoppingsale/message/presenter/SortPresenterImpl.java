@@ -93,7 +93,7 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
 
                     @Override
                     public void onExit() {
-
+                            getView().ExitToLogin();
                     }
                 }));
             }

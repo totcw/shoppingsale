@@ -62,12 +62,13 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
         }
 
         getView().getRxManager().add(NetWork.getNetService()
-                                        .getPwdUpdate(account,pwd,"商户")
+                                        .getPwdUpdate(account+"s",pwd,"merchant")
                                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
                                         .subscribe(new MyObserver<String>() {
                                             @Override
                                             protected void onSuccess(String data, String resultMsg) {
                                                     UiUtils.showToast(getView().getmActivity(),resultMsg);
+                                                    getView().getmActivity().finish();
                                             }
 
                                             @Override

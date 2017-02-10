@@ -153,7 +153,7 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
 
                                     @Override
                                     public void onExit() {
-
+                                        getView().ExitToLogin();
                                     }
                                 }));
 
@@ -192,7 +192,7 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
 
                     @Override
                     public void onExit() {
-
+                        getView().ExitToLogin();
                     }
                 })
         );
