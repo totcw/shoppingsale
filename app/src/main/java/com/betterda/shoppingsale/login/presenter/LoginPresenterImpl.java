@@ -56,19 +56,22 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
                                 System.out.println("登录success:" + data.toString());
                             }
                             if (data != null) {
-                                //设置为登录状态
-                               // CacheUtils.putBoolean(getView().getmActivity(), Constants.Cache.ISLOGIN, true);
+                                boolean selected = getView().getImageView().isSelected();
+                                if (selected) {
+                                    //是否记住密码
+                                    CacheUtils.putBoolean(getView().getmActivity(), Constants.Cache.REMEMBER, true);
+                                } else {
+                                    //是否记住密码
+                                    CacheUtils.putBoolean(getView().getmActivity(), Constants.Cache.REMEMBER, false);
+                                }
+
                                 //缓存手机号
                                 CacheUtils.putString(getView().getmActivity(), Constants.Cache.ACCOUNT, data.getAccount());
                                 CacheUtils.putString(getView().getmActivity(), data.getAccount()+Constants.Cache.PWD, pwd);
                                 //缓存token
                                 CacheUtils.putString(getView().getmActivity(), data.getAccount() + Constants.Cache.TOKEN, data.getToken());
-                                //缓存昵称
-                               // CacheUtils.putString(getView().getmActivity(), data.getAccount() + Constants.Cache.NICKNAME, data.getNickName());
-                                //缓存头像
-                               // CacheUtils.putString(getView().getmActivity(), data.getAccount() + Constants.Cache.TOUXIANG, data.getPhoto());
                                 UiUtils.startIntent(getView().getmActivity(), MainActivity.class);
-                                getView().getmActivity().finish();
+                              //  getView().getmActivity().finish();
                                 UiUtils.showToast(getView().getmActivity(),resultMsg);
                             } else {
                                 UiUtils.showToast(getView().getmActivity(), "登录失败,获取信息失败");

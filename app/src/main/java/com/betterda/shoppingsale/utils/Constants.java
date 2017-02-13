@@ -18,7 +18,7 @@ public class Constants {
 
     public static class Url {
 
-        public  final static String URL="http://192.168.1.145:8080/WinePIN/";
+        public  final static String URL="http://192.168.1.104:8080/WinePIN/";
         public static final String URL_REGISTER = "appAPI.do?api/merchant/register";
         public static final String URL_LOGIN = "appAPI.do?api/merchant/login";
         public static final String URL_PWD_UPDATE = "appAPI.do?api/account/update";
@@ -53,5 +53,6 @@ public class Constants {
         public static final String ACCOUNT = "account";
         public static final String PWD = "password";
         public static final String TOKEN = "token";
+        public static final String REMEMBER = "remember";//是否记住密码
     }
 }

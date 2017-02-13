@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.login.contract;
 
 
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.betterda.shoppingsale.base.IModel;
 import com.betterda.shoppingsale.base.IPresenter;
@@ -24,6 +25,8 @@ public interface View extends IView {
     EditText getTvLogin();
 
     EditText getTvPwd();
+
+    ImageView getImageView();
 }
 
 public interface Presenter extends IPresenter<View> {

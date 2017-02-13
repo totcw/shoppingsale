@@ -7,8 +7,10 @@ import android.widget.LinearLayout;
 
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.setting.contract.SettingContract;
 import com.betterda.shoppingsale.setting.presenter.SettingPresenterImpl;
+import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 
 import butterknife.BindView;
@@ -51,6 +53,7 @@ public class SettingActivity extends BaseActivity<SettingContract.Presenter> imp
             case R.id.linear_setting_us:
                 break;
             case R.id.btn_setting_exit:
+                UiUtils.startIntent(getmActivity(), LoginActivity.class);
                 break;
             case R.id.bar_back:
                 back();

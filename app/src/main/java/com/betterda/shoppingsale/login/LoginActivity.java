@@ -26,6 +26,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 登录
@@ -61,14 +62,20 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         super.init();
         mTopbarLogin.setTitle("登录");
         mTopbarLogin.setBackVisibility(false);
-        account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
-        String pwd = CacheUtils.getString(getmActivity(), account +Constants.Cache.PWD, "");
-        if (!TextUtils.isEmpty(account)) {
-            int indexOf = account.lastIndexOf("s");
-            account = account.substring(0, indexOf);
+
+        boolean remember = CacheUtils.getBoolean(getmActivity(), Constants.Cache.REMEMBER, false);
+        if (remember) {
+            account = CacheUtils.getString(getmActivity(), Constants.Cache.ACCOUNT, "");
+            String pwd = CacheUtils.getString(getmActivity(), account +Constants.Cache.PWD, "");
+            if (!TextUtils.isEmpty(account)) {
+                int indexOf = account.lastIndexOf("s");
+                account = account.substring(0, indexOf);
+            }
+            mEtLoginNumber.setText(account);
+            mEtLoginPwd.setText(pwd);
+            mIvJizhu.setSelected(true);
         }
-        mEtLoginNumber.setText(account);
-        mEtLoginPwd.setText(pwd);
+        initRxBus();
     }
 
     @OnClick({R.id.tv_login_pwd, R.id.bar_back, R.id.btn_login, R.id.relative_login_register,R.id.linear_login_pwd})
@@ -102,6 +109,16 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
 
 
+    private void initRxBus() {
+        getRxManager().on(LoginActivity.class.getSimpleName(), new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+
+                finish();
+            }
+        });
+    }
+
 
 
     @Override
@@ -130,6 +147,11 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     public EditText getTvPwd() {
         return mEtLoginPwd;
+    }
+
+    @Override
+    public ImageView getImageView() {
+        return mIvJizhu;
     }
 
     @Override

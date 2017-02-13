@@ -10,6 +10,7 @@ import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
 import com.betterda.shoppingsale.home.contract.HomeContract;
 import com.betterda.shoppingsale.home.presenter.HomePresenterImpl;
+import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.welcome.WelcomeActivity;
 
 import butterknife.BindView;
@@ -111,6 +112,7 @@ public class MainActivity extends BaseActivity<HomeContract.Presenter> implement
     @Override
     public void onBackPressed() {
         //发送广播 关闭欢迎页面
+        mRxManager.post(LoginActivity.class.getSimpleName(),"finish");
         mRxManager.post(WelcomeActivity.class.getSimpleName(),"finish");
         super.onBackPressed();
 
