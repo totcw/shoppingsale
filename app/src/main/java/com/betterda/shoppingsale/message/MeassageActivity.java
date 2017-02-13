@@ -45,6 +45,12 @@ public class MeassageActivity extends BaseActivity<MeassageContract.Presenter> i
     public void init() {
         super.init();
         mTopbarMeassage.setTitle("消息");
+        mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
     @OnClick({R.id.bar_back})
@@ -59,6 +65,7 @@ public class MeassageActivity extends BaseActivity<MeassageContract.Presenter> i
 
     public void initRv(RecyclerView.Adapter adapter) {
         mRecycleview.setVisibility(View.VISIBLE);
+        mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setLoadingMoreEnabled(true);
         mRecycleview.setAdapter(adapter);
@@ -70,7 +77,7 @@ public class MeassageActivity extends BaseActivity<MeassageContract.Presenter> i
 
             @Override
             public void onLoadMore() {
-
+                getPresenter().onLoadMore();
             }
         });
     }

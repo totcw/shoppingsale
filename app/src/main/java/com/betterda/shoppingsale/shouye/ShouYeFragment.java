@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.betterda.mylibrary.Utils.StatusBarCompat;
 import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
@@ -30,6 +31,7 @@ import com.betterda.shoppingsale.shouye.presenter.ShouYePresenterImpl;
 import com.betterda.shoppingsale.stock.StockActivity;
 import com.betterda.shoppingsale.utils.GsonTools;
 import com.betterda.shoppingsale.utils.UiUtils;
+import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.ziti.ZiTiActivity;
 import com.betterda.shoppingsale.zxing.CaptureActivity;
 
@@ -118,7 +120,7 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                 startToOrder("待收货");
                 break;
             case R.id.linear_second3://全部订单
-                startToOrder(null);
+                startToOrder("全部");
                 break;
             case R.id.linear_second4://扫码入库
                 Intent intent = new Intent(getmActivity(), CaptureActivity.class);
@@ -165,7 +167,13 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
      */
     private void startToOrder(String type) {
         Intent intent = new Intent(getmActivity(), OrderActivity.class);
-        intent.putExtra("orderStatus",type);
+        if ("全部".equals(type)) {
+            intent.putExtra("orderStatus", "");
+        } else {
+            intent.putExtra("orderStatus",type);
+        }
+
+        intent.putExtra("type",type);
         UiUtils.startIntent(getmActivity(),intent);
     }
 
@@ -222,6 +230,8 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
         List<ScanStock> list = new ArrayList<>();
         list.add(scanStock);
         list.add(scanStock2);*/
+        final ShapeLoadingDialog dialog = UiUtils.createDialog(getmActivity(), "正在入库");
+        UiUtils.showDialog(getmActivity(),dialog);
         getRxManager().add(NetWork.getNetService()
                 .scanStock(getAccount(),getToken(),result)
                 .compose(NetWork.handleResult(new BaseCallModel<String>()))
@@ -231,6 +241,8 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                         if (BuildConfig.LOG_DEBUG) {
                             System.out.println("扫描入库:"+result);
                         }
+                        UiUtils.showToast(getmActivity(),resultMsg);
+                        UiUtils.dissmissDialog(getmActivity(),dialog);
                     }
 
                     @Override
@@ -238,10 +250,14 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                         if (BuildConfig.LOG_DEBUG) {
                             System.out.println("扫描入库fail:"+resultMsg);
                         }
+                        UiUtils.showToast(getmActivity(),resultMsg);
+                        UiUtils.dissmissDialog(getmActivity(),dialog);
                     }
 
                     @Override
                     public void onExit() {
+
+                        UiUtils.dissmissDialog(getmActivity(),dialog);
                             ExitToLogin();
                     }
                 }));

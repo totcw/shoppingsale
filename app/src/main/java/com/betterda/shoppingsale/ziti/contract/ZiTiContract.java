@@ -19,6 +19,12 @@ public class ZiTiContract {
         RecyclerView.Adapter getRvAdapter();
 
         RecyclerView.ItemDecoration getItemDecoration();
+
+        void onStart();
+
+        void onLoadMore();
+
+        void onError();
     }
 
     public interface Model extends IModel {

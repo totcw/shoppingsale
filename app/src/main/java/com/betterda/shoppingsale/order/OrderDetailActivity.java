@@ -80,7 +80,12 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
     public void init() {
         super.init();
         mTopbarOderdetail.setTitle("订单详细");
-
+        mLoadpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
 

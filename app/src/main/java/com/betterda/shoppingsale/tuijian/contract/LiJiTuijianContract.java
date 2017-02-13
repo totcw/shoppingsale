@@ -27,6 +27,8 @@ public class LiJiTuijianContract {
 
     public interface Presenter extends IPresenter<View> {
         RecyclerView.Adapter getRvShareAdapter();
+
+        void onError();
     }
 
     public interface Model extends IModel {

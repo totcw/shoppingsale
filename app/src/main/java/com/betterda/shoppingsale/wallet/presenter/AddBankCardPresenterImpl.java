@@ -88,6 +88,7 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
 
                           @Override
                           public void onExit() {
+                              UiUtils.dissmissDialog(getView().getmActivity(),dialog);
                                 getView().ExitToLogin();
                           }
                       }));

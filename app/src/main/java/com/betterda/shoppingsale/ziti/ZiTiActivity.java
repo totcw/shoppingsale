@@ -42,6 +42,7 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
     LoadingPager mLoadingpager;
     @BindView(R.id.relative_ziti_add)
     RelativeLayout mRelativeAdd;
+    private boolean isBack;//是否是从扫描页面返回
 
     @Override
     protected ZiTiContract.Presenter onLoadPresenter() {
@@ -60,8 +61,21 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
         super.init();
 
         initRv();
+        mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isBack) {
+            getPresenter().onStart();
+        }
+    }
 
     @OnClick({R.id.iv_ziti_back, R.id.relative_ziti_add})
     public void onClick(View view) {
@@ -76,15 +90,26 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
     }
 
 
-
     private void initRv() {
         mRecycleview.setVisibility(View.VISIBLE);
-        mRecycleview.setPullRefreshEnabled(true);
+        mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
         mRecycleview.addItemDecoration(getPresenter().getItemDecoration());
+        mRecycleview.setLoadingMoreEnabled(true);
+        mRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
 
+            }
+
+            @Override
+            public void onLoadMore() {
+                getPresenter().onLoadMore();
+            }
+        });
     }
+
     private void shoAdd() {
         View view1 = View.inflate(getmActivity(), R.layout.pp_ziti, null);
         TextView tvSao = (TextView) view1.findViewById(R.id.tv_pp_ziti_sao);
@@ -93,28 +118,29 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getmActivity(), CaptureActivity.class);
-                UiUtils.startIntentForResult(getmActivity(),intent,0);
+                UiUtils.startIntentForResult(getmActivity(), intent, 0);
                 closePopupWindow();
             }
         });
         tvWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UiUtils.startIntent(getmActivity(),WriteZiTiActivity.class);
+                UiUtils.startIntent(getmActivity(), WriteZiTiActivity.class);
                 closePopupWindow();
             }
         });
 
-        setUpPopupWindow(view1,mRelativeAdd, UtilMethod.dip2px(getmActivity(),110),UtilMethod.dip2px(getmActivity(),96));
+        setUpPopupWindow(view1, mRelativeAdd, UtilMethod.dip2px(getmActivity(), 110), UtilMethod.dip2px(getmActivity(), 96));
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        System.out.println("返回");
         if (Activity.RESULT_OK == resultCode) {
             if (requestCode == 0) {
-
+                isBack = true;
                 if (data != null) {
                     String result = data.getStringExtra("result");
                     if (!TextUtils.isEmpty(result)) {
@@ -130,9 +156,10 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
 
     /**
      * 解析二维码获取到自提码和订单号
+     *
      * @param result
      */
-    private void getData( String result) {
+    private void getData(String result) {
         if (TextUtils.isEmpty(result)) {
             String[] split = result.split(",");
             if (split != null && split.length > 1) {
@@ -147,6 +174,17 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
     @Override
     public void dismiss() {
         super.dismiss();
-        UiUtils.backgroundAlpha(1.0f,getmActivity());
+        UiUtils.backgroundAlpha(1.0f, getmActivity());
+    }
+
+    @Override
+    public LoadingPager getLodapger() {
+        return mLoadingpager;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isBack = false;
     }
 }

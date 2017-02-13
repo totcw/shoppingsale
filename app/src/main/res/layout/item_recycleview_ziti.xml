@@ -31,7 +31,7 @@
                 android:id="@+id/tv_tiem_hexiao_kahao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="54798464876187678"
+                android:text=""
                 android:textSize="12sp"
                 android:textColor="@color/shouye_renmen_tv"
                 />
@@ -52,7 +52,7 @@
                 android:id="@+id/tv_item_hexiao_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2015-05-01 15:20:22"
+                android:text=""
                 android:textSize="12sp"
                 android:textColor="@color/shouye_renmen_tv"
                 />

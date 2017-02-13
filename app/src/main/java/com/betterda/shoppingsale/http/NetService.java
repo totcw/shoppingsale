@@ -11,6 +11,7 @@ import com.betterda.shoppingsale.javabean.UserInfo;
 import com.betterda.shoppingsale.javabean.OrderAll;
 
 import com.betterda.shoppingsale.javabean.Wallet;
+import com.betterda.shoppingsale.javabean.ZiTi;
 import com.betterda.shoppingsale.shouye.model.LunBoTu;
 import com.betterda.shoppingsale.utils.Constants;
 
@@ -98,7 +99,7 @@ public interface NetService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Constants.Url.URL_LUNBO)
+    @POST(Constants.Url.URL_DEL_BANK)
     Observable<BaseCallModel<String>> getBandDelete(@Field("account") String account,
                                                     @Field("token") String token,
                                                     @Field("id") String id);
@@ -117,7 +118,7 @@ public interface NetService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Constants.Url.URL_LUNBO)
+    @POST(Constants.Url.URL_ADD_BANK)
     Observable<BaseCallModel<String>> getBandAdd(@Field("account") String account,
                                                  @Field("token") String token,
                                                  @Field("cardName") String truename,
@@ -135,7 +136,7 @@ public interface NetService {
      * @return
      */
     @FormUrlEncoded
-    @POST(Constants.Url.URL_LUNBO)
+    @POST(Constants.Url.URL_GET_BANK)
     Observable<BaseCallModel<List<BankCard>>> getBandGet(@Field("account") String account,
 
                                                          @Field("token") String token
@@ -219,6 +220,24 @@ public interface NetService {
     Observable<BaseCallModel<String>> comfirmZiti(@Field("account") String account,
                                                   @Field("token") String token,
                                                   @Field("barCode") String barCode
+    );
+
+    /**
+     * 自提列表
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_GET_ORDERLIST)
+    Observable<BaseCallModel<List<ZiTi>>> getZitiList(@Field("account") String account,
+                                                      @Field("token") String token,
+                                                      @Field("beginTime") String beginTime,
+                                                      @Field("endTime") String endTime,
+                                                      @Field("pageNo") String pageNo,
+                                                      @Field("pageSize") String pageSize
+
     );
 
     /**

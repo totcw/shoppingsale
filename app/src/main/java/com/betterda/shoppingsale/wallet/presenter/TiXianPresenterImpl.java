@@ -4,6 +4,7 @@ package com.betterda.shoppingsale.wallet.presenter;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.base.BasePresenter;
 import com.betterda.shoppingsale.http.MyObserver;
@@ -42,6 +43,8 @@ public class TiXianPresenterImpl extends BasePresenter<TiXianContract.View,TiXia
         NetworkUtils.isNetWork(getView().getmActivity(), getView().getTvBalance(), new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
+                final ShapeLoadingDialog dialog = UiUtils.createDialog(getView().getmActivity(), "正在提交...");
+                UiUtils.showDialog(getView().getmActivity(),dialog);
                 getView().getRxManager().add(NetWork.getNetService()
                         .getCash(getView().getAccount(),getView().getToken(),balance,mBankCard)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
@@ -51,11 +54,17 @@ public class TiXianPresenterImpl extends BasePresenter<TiXianContract.View,TiXia
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("提现success:"+resultMsg);
                                 }
+                                UiUtils.dissmissDialog(
+                                        getView().getmActivity(), dialog
+                                );
                                 getView().getmActivity().finish();
                             }
 
                             @Override
                             public void onFail(String resultMsg) {
+                                UiUtils.dissmissDialog(
+                                        getView().getmActivity(), dialog
+                                );
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("提现fail:"+resultMsg);
                                 }
@@ -63,6 +72,9 @@ public class TiXianPresenterImpl extends BasePresenter<TiXianContract.View,TiXia
 
                             @Override
                             public void onExit() {
+                                UiUtils.dissmissDialog(
+                                        getView().getmActivity(), dialog
+                                );
                                 getView().ExitToLogin();
                             }
                         }));

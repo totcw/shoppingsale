@@ -31,6 +31,8 @@ public class OrderDetailContract {
         void publish();
         //确认提货
         void ziti();
+
+        void onError();
     }
 
     public interface Model extends IModel{

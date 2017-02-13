@@ -64,6 +64,11 @@ public class LiJiTuijianPresenterImpl extends BasePresenter<LiJiTuijianContract.
         return commonAdapter;
     }
 
+    @Override
+    public void onError() {
+        getData();
+    }
+
     /**
      * 分享
      *

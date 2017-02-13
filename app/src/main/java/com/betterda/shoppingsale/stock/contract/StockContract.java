@@ -17,6 +17,10 @@ public class StockContract {
 
     public interface Presenter extends IPresenter<View> {
         RecyclerView.Adapter getRvAdapter();
+
+        void onLoadMore();
+
+        void onError();
     }
 
     public interface Model extends IModel {

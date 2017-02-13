@@ -47,9 +47,19 @@ public class MyYinHangKaActivity extends BaseActivity<MyYinHangKaContract.Presen
         super.init();
         setTopBar();
 
-        mLoadingpager.setLoadVisable();
-
         initRv();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getPresenter().onStart();
+        mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
     private void setTopBar() {

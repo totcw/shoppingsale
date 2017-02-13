@@ -50,7 +50,12 @@ public class LiJiTuijianActivity extends BaseActivity<LiJiTuijianContract.Presen
         super.init();
         mTopbarMyeweima.setTitle("立即推荐");
         mTopbarMyeweima.setShareVisbility(true);
-
+        mLoadpagerMyeweima.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
 
     }
     @OnClick({R.id.bar_back, R.id.relative_share})

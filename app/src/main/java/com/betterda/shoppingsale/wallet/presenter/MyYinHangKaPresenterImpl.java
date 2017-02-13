@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.betterda.mylibrary.ShapeLoadingDialog;
 
+import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BasePresenter;
 import com.betterda.shoppingsale.data.BankData;
@@ -38,6 +39,18 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
     @Override
     public void start() {
         init();
+
+    }
+
+
+
+    @Override
+    public void onStart() {
+        getData();
+    }
+
+    @Override
+    public void onError() {
         getData();
     }
 
@@ -105,7 +118,6 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
     }
 
 
-
     /**
      * 删除银行卡的确定按钮
      */
@@ -153,6 +165,7 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
 
                                     @Override
                                     public void onExit() {
+                                        UiUtils.dissmissDialog(getView().getmActivity(), dialog);
                                         getView().ExitToLogin();
                                     }
                                 }));
@@ -170,13 +183,16 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
      * 获取银行卡列表
      */
     private void getData() {
-
+        getView().getLodapger().setLoadVisable();
         getView().getRxManager().add(NetWork.getNetService()
         .getBandGet(getView().getAccount(),getView().getToken())
         .compose(NetWork.handleResult(new BaseCallModel<List<BankCard>>()))
         .subscribe(new MyObserver<List<BankCard>>() {
                     @Override
                     protected void onSuccess(List<BankCard> data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("我的银行卡:"+data);
+                        }
                         if (data != null) {
                             mBankCardList.addAll(data);
                             mBankCardCommonAdapter.notifyDataSetChanged();
@@ -188,6 +204,9 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                     @Override
                     public void onFail(String resultMsg) {
                         UtilMethod.setLoadpagerError(getView().getLodapger());
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("我的银行卡fail:"+resultMsg);
+                        }
                     }
 
                     @Override

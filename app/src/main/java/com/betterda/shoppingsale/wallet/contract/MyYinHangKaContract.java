@@ -23,6 +23,10 @@ public class MyYinHangKaContract {
 
     public interface Presenter extends IPresenter<View> {
         RecyclerView.Adapter getRvAdapter();
+
+        void onStart();
+
+        void onError();
     }
 
     public interface Model extends IModel {

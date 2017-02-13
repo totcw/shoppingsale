@@ -14,6 +14,7 @@ import com.betterda.shoppingsale.javabean.MingXi;
 import com.betterda.shoppingsale.javabean.TitleBean;
 import com.betterda.shoppingsale.utils.Constants;
 import com.betterda.shoppingsale.utils.NetworkUtils;
+import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.wallet.contract.MingXiContract;
 import com.betterda.shoppingsale.wallet.model.MingXiModelImpl;
 import com.betterda.shoppingsale.widget.TitleItemDecoration;
@@ -38,6 +39,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
         attachModel(new MingXiModelImpl());
         initRv();
         getintent();
+        getView().getLodapger().setLoadVisable();
         getData();
     }
 
@@ -98,6 +100,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
 
                                         mingXiCommonAdapter.notifyDataSetChanged();
                                     }
+                                    UtilMethod.hideOrEmpty(data,getView().getLodapger());
 
                                 }
 
@@ -106,6 +109,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                                     if (BuildConfig.LOG_DEBUG) {
                                         System.out.println("推荐明细fail:" + resultMsg);
                                     }
+                                    UtilMethod.setLoadpagerError(getView().getLodapger());
                                 }
 
                                 @Override
@@ -144,7 +148,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
 
                                         mingXiCommonAdapter.notifyDataSetChanged();
                                     }
-
+                                    UtilMethod.hideOrEmpty(data,getView().getLodapger());
                                 }
 
                                 @Override
@@ -152,6 +156,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                                     if (BuildConfig.LOG_DEBUG) {
                                         System.out.println("交易明细fail:" + resultMsg);
                                     }
+                                    UtilMethod.setLoadpagerError(getView().getLodapger());
                                 }
 
                                 @Override
@@ -177,9 +182,19 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
         return new TitleItemDecoration<MingXi>(getView().getmActivity(), mingXiList);
     }
 
-    @Override
-    public void loadMore() {
 
+
+    @Override
+    public void onLoadMore() {
+        pageNo++;
+        getData();
+    }
+
+    @Override
+    public void onError() {
+        getView().getLodapger().setLoadVisable();
+        pageNo = 1;
+        getData();
     }
 
 

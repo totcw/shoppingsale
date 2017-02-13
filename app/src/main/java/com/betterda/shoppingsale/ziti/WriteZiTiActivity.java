@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
@@ -70,6 +71,8 @@ public class WriteZiTiActivity extends BaseActivity {
         NetworkUtils.isNetWork(getmActivity(), mEtWiritezitimaNumber, new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
+                final ShapeLoadingDialog dialog = UiUtils.createDialog(getmActivity(), "正在获取...");
+                UiUtils.showDialog(getmActivity(),dialog);
                 getRxManager().add(NetWork.getNetService()
                         .comfirmZiti(getAccount(),getToken(),barcode)
                         .compose(NetWork.handleResult(new BaseCallModel<String>()))
@@ -79,6 +82,7 @@ public class WriteZiTiActivity extends BaseActivity {
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("通过自提码获取订单号success:"+data);
                                 }
+                                UiUtils.dissmissDialog(getmActivity(),dialog);
                                 Intent intent = new Intent(getmActivity(), OrderDetailActivity.class);
                                 intent.putExtra("orderId", data);
                                 intent.putExtra("barcode", barcode);
@@ -91,10 +95,12 @@ public class WriteZiTiActivity extends BaseActivity {
                                 if (BuildConfig.LOG_DEBUG) {
                                     System.out.println("通过自提码获取订单号fail:"+resultMsg);
                                 }
+                                UiUtils.dissmissDialog(getmActivity(),dialog);
                             }
 
                             @Override
                             public void onExit() {
+                                UiUtils.dissmissDialog(getmActivity(),dialog);
                                 ExitToLogin();
                             }
                         }));

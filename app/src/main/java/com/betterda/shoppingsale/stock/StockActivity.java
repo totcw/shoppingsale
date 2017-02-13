@@ -44,6 +44,12 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
         mTopbarStock.setTitle("商品库存");
 
         initRv();
+        mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
 
@@ -63,6 +69,18 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
         mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
+        mRecycleview.setLoadingMoreEnabled(true);
+        mRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                getPresenter().onLoadMore();
+            }
+        });
 
     }
 

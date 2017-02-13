@@ -17,6 +17,9 @@ public class MeassageContract {
     }
 
     public interface Presenter extends IPresenter<View> {
+        void onLoadMore();
+
+        void onError();
     }
 
     public interface Model extends IModel{

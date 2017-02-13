@@ -15,6 +15,7 @@ import com.betterda.shoppingsale.message.contract.SortContract;
 
 import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
+import com.betterda.shoppingsale.utils.UtilMethod;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
 
@@ -63,6 +64,7 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
     }
 
     public void getData() {
+        getView().getLodapger().setLoadVisable();
         NetworkUtils.isNetWork(getView().getmActivity(), getView().getLodapger(), new NetworkUtils.SetDataInterface() {
             @Override
             public void getDataApi() {
@@ -77,11 +79,12 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
                         }
                         if (data != null) {
                             if (meassageList != null && meassageCommonAdapter != null) {
-
+                                meassageList.clear();
                                 meassageList.addAll(data);
                                 meassageCommonAdapter.notifyDataSetChanged();
                             }
                         }
+                        UtilMethod.hideOrEmpty(data,getView().getLodapger());
                     }
 
                     @Override
@@ -89,6 +92,7 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
                         if (BuildConfig.LOG_DEBUG) {
                             System.out.println("消息类型fail:"+resultMsg);
                         }
+                       UtilMethod.setLoadpagerError(getView().getLodapger());
                     }
 
                     @Override

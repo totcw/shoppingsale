@@ -251,8 +251,8 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
             @Override
             public void getDataApi() {
                 //封装普通的string字段
-                RequestBody account = RequestBody.create(MediaType.parse("text/plain"), getAccount());
-                RequestBody token = RequestBody.create(MediaType.parse("text/plain"), getToken());
+                RequestBody account = RequestBody.create(MediaType.parse("text/plain"), "");
+                RequestBody token = RequestBody.create(MediaType.parse("text/plain"), "");
                 RequestBody merchant = RequestBody.create(MediaType.parse("text/plain"), "merchant");
                 //封装文件
                 RequestBody file = RequestBody.create(MediaType.parse("multipart/form-data"), new File(goosimg));

@@ -46,7 +46,12 @@ public class OrderActivity extends BaseActivity<OrderContract.Presenter> impleme
         super.init();
         setTopBar();
         initRv();
-
+        mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
 
@@ -76,6 +81,18 @@ public class OrderActivity extends BaseActivity<OrderContract.Presenter> impleme
         mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
+        mRecycleview.setLoadingMoreEnabled(true);
+        mRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                getPresenter().onLoadMore();
+            }
+        });
     }
 
     @Override

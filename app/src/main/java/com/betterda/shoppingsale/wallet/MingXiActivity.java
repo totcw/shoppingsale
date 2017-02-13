@@ -44,6 +44,12 @@ public class MingXiActivity extends BaseActivity<MingXiContract.Presenter> imple
     public void init() {
         super.init();
         mTopbarMingxi.setTitle("明细");
+        mLayoutLoadingpager.setonErrorClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getPresenter().onError();
+            }
+        });
     }
 
     @OnClick({R.id.bar_back})
@@ -60,6 +66,7 @@ public class MingXiActivity extends BaseActivity<MingXiContract.Presenter> imple
         mLayoutRecycleview.setVisibility(View.VISIBLE);
         mLayoutRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mLayoutRecycleview.setLoadingMoreEnabled(true);
+        mLayoutRecycleview.setPullRefreshEnabled(false);
         mLayoutRecycleview.addItemDecoration(getPresenter().getItemDecoration());
         mLayoutRecycleview.setAdapter(adapter);
         mLayoutRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
@@ -70,8 +77,13 @@ public class MingXiActivity extends BaseActivity<MingXiContract.Presenter> imple
 
             @Override
             public void onLoadMore() {
-
+                getPresenter().onLoadMore();
             }
         });
+    }
+
+    @Override
+    public LoadingPager getLodapger() {
+        return mLayoutLoadingpager;
     }
 }
