@@ -98,4 +98,9 @@ public class FindPwdActivity extends BaseActivity<FindPwdContract.Presenter> imp
     public String getYzm() {
         return mEtRegisterYzm.getText().toString().trim();
     }
+
+    @Override
+    public View getTvPwd() {
+        return mEtRegisterPwd;
+    }
 }

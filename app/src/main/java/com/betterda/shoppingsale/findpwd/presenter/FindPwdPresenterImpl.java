@@ -2,11 +2,13 @@ package com.betterda.shoppingsale.findpwd.presenter;
 
 import android.text.TextUtils;
 
+import com.betterda.mylibrary.ShapeLoadingDialog;
 import com.betterda.shoppingsale.base.BasePresenter;
 import com.betterda.shoppingsale.findpwd.contract.FindPwdContract;
 import com.betterda.shoppingsale.http.MyObserver;
 import com.betterda.shoppingsale.http.NetWork;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 
 
@@ -35,8 +37,8 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
 
     @Override
     public void register() {
-        String account = getView().getAccount();
-        String pwd = getView().getPwd();
+        final String account = getView().getAccount();
+        final String pwd = getView().getPwd();
         String pwd2 = getView().getPwd2();
         String yzm = getView().getYzm();
 
@@ -60,27 +62,36 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
             UiUtils.showToast(getView().getmActivity(), "两次输入的密码不同");
             return;
         }
+        NetworkUtils.isNetWork(getView().getmActivity(), getView().getTvPwd(), new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                final ShapeLoadingDialog dialog = UiUtils.createDialog(getView().getmActivity(), "正在提交...");
+                UiUtils.showDialog(getView().getmActivity(),dialog);
+                getView().getRxManager().add(NetWork.getNetService()
+                        .getPwdUpdate(account+"s",pwd,"merchant")
+                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
+                        .subscribe(new MyObserver<String>() {
+                            @Override
+                            protected void onSuccess(String data, String resultMsg) {
+                                UiUtils.showToast(getView().getmActivity(),resultMsg);
+                                UiUtils.dissmissDialog(getView().getmActivity(),dialog);
+                                getView().getmActivity().finish();
+                            }
 
-        getView().getRxManager().add(NetWork.getNetService()
-                                        .getPwdUpdate(account+"s",pwd,"merchant")
-                                        .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                                        .subscribe(new MyObserver<String>() {
-                                            @Override
-                                            protected void onSuccess(String data, String resultMsg) {
-                                                    UiUtils.showToast(getView().getmActivity(),resultMsg);
-                                                    getView().getmActivity().finish();
-                                            }
+                            @Override
+                            public void onFail(String resultMsg) {
+                                UiUtils.dissmissDialog(getView().getmActivity(),dialog);
+                                UiUtils.showToast(getView().getmActivity(),resultMsg);
+                            }
 
-                                            @Override
-                                            public void onFail(String resultMsg) {
-                                                UiUtils.showToast(getView().getmActivity(),resultMsg);
-                                            }
+                            @Override
+                            public void onExit() {
 
-                                            @Override
-                                            public void onExit() {
+                            }
+                        }));
 
-                                            }
-                                        }));
+            }
+        });
 
     }
 
