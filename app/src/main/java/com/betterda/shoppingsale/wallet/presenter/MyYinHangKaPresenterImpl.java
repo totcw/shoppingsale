@@ -194,8 +194,12 @@ public class MyYinHangKaPresenterImpl extends BasePresenter<MyYinHangKaContract.
                             System.out.println("我的银行卡:"+data);
                         }
                         if (data != null) {
-                            mBankCardList.addAll(data);
-                            mBankCardCommonAdapter.notifyDataSetChanged();
+                            if (mBankCardList != null && mBankCardCommonAdapter != null) {
+                                mBankCardList.clear();
+                                mBankCardList.addAll(data);
+                                mBankCardCommonAdapter.notifyDataSetChanged();
+                            }
+
                         }
 
                         UtilMethod.hideOrEmpty(data,getView().getLodapger());

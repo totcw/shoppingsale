@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.utils.CacheUtils;
 import com.betterda.shoppingsale.utils.Constants;
@@ -62,6 +63,7 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
             //开始presenter的逻辑
             getPresenter().start();
         }
+        setLoadpagerBackgroud();
     }
 
 
@@ -127,7 +129,13 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
         return  CacheUtils.getString(getmActivity(), getAccount()+Constants.Cache.TOKEN, "");
     }
 
-
+    public void setLoadpagerBackgroud() {
+        if (getLodapger() != null) {
+            getLodapger().setEmptyBackground(R.mipmap.load_empty);
+            getLodapger().setErrorBackground(R.mipmap.load_error);
+            getLodapger().setLoadBackground(R.drawable.loadinganim);
+        }
+    }
     /**
      * 强制跳转到登录界面
      */
