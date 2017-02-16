@@ -102,7 +102,7 @@ public interface NetService {
     @POST(Constants.Url.URL_DEL_BANK)
     Observable<BaseCallModel<String>> getBandDelete(@Field("account") String account,
                                                     @Field("token") String token,
-                                                    @Field("id") String id);
+                                                    @Field("jsonData") String id);
 
 
     /**

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
 import com.betterda.mylibrary.LoadingPager;
+import com.betterda.mylibrary.xrecycleview.XRecyclerView;
 import com.betterda.shoppingsale.javabean.Bus;
 
 import java.lang.reflect.Field;
@@ -378,7 +379,18 @@ public class UtilMethod {
         }
     }
 
-
+    /**
+     * 设置 recycleview的加载状态
+     * @param data
+     * @param recyclerView
+     */
+    public static void onLoadMore(List data, XRecyclerView recyclerView) {
+        if (data.size() < Constants.PAGESIZE2) {
+            recyclerView.setNoMore(true);
+        } else {
+            recyclerView.setNoMore(false);
+        }
+    }
 
     /**
      * 计算商品的件数

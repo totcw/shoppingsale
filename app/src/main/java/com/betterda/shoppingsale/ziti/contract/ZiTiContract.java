@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.ziti.contract;
 
 import android.support.v7.widget.RecyclerView;
 
+import com.betterda.mylibrary.xrecycleview.XRecyclerView;
 import com.betterda.shoppingsale.base.IModel;
 import com.betterda.shoppingsale.base.IPresenter;
 import com.betterda.shoppingsale.base.IView;
@@ -13,6 +14,7 @@ import com.betterda.shoppingsale.base.IView;
 public class ZiTiContract {
 
     public interface View extends IView{
+        XRecyclerView getRv();
     }
 
     public interface Presenter extends IPresenter<View> {

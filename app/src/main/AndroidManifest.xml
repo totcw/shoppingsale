@@ -122,7 +122,18 @@
             android:screenOrientation="portrait"></activity>
 
 
+        <!--JPUSH-->
+        <receiver
+            android:name=".receiver.JpushReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
 
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+
+                <category android:name="com.betterda.shoppingsale" />
+            </intent-filter>
+        </receiver>
         <!--新浪微博-->
 
         <activity

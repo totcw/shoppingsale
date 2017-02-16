@@ -134,21 +134,29 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                                         System.out.println("交易明细:" + data.toString() + resultMsg);
                                     }
                                     if (data != null) {
-                                        for (MingXi mingXi : data) {
-                                            if (mingXi != null) {
-                                                String time = mingXi.getTime();
-                                                int indexOf = time.lastIndexOf("-");
-                                                String tag = time.substring(0, indexOf);
-                                                TitleBean<MingXi> titleBean = new TitleBean<MingXi>();
-                                                titleBean.setData(mingXi);
-                                                titleBean.setTag(tag);
-                                                mingXiList.add(titleBean);
+                                        if (mingXiList != null && mingXiCommonAdapter != null) {
+                                            if (pageNo == 1) {
+                                                mingXiList.clear();
+                                                getView().getRv().setNoMore(false);
+                                            } else {
+                                                UtilMethod.onLoadMore(data,getView().getRv());
                                             }
-                                        }
+                                            for (MingXi mingXi : data) {
+                                                if (mingXi != null) {
+                                                    String time = mingXi.getTime();
+                                                    int indexOf = time.lastIndexOf("-");
+                                                    String tag = time.substring(0, indexOf);
+                                                    TitleBean<MingXi> titleBean = new TitleBean<MingXi>();
+                                                    titleBean.setData(mingXi);
+                                                    titleBean.setTag(tag);
+                                                    mingXiList.add(titleBean);
+                                                }
+                                            }
 
-                                        mingXiCommonAdapter.notifyDataSetChanged();
+                                            mingXiCommonAdapter.notifyDataSetChanged();
+                                        }
                                     }
-                                    UtilMethod.hideOrEmpty(data,getView().getLodapger());
+                                    UtilMethod.hideOrEmpty(mingXiList,getView().getLodapger());
                                 }
 
                                 @Override

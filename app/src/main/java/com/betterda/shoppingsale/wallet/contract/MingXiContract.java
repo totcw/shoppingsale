@@ -3,6 +3,7 @@ package com.betterda.shoppingsale.wallet.contract;
 import android.support.v7.widget.RecyclerView;
 
 
+import com.betterda.mylibrary.xrecycleview.XRecyclerView;
 import com.betterda.shoppingsale.base.IModel;
 import com.betterda.shoppingsale.base.IPresenter;
 import com.betterda.shoppingsale.base.IView;
@@ -20,6 +21,8 @@ public class MingXiContract  {
     
 public interface View extends IView {
     void initRv(RecyclerView.Adapter adapter);
+
+    XRecyclerView getRv();
 }
 
 public interface Presenter extends IPresenter<View> {

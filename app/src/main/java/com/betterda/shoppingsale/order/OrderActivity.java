@@ -99,4 +99,9 @@ public class OrderActivity extends BaseActivity<OrderContract.Presenter> impleme
     public LoadingPager getLodapger() {
         return mLoadingpager;
     }
+
+    @Override
+    public XRecyclerView getRv() {
+        return mRecycleview;
+    }
 }

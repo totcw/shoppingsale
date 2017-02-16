@@ -187,4 +187,9 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
         super.onStop();
         isBack = false;
     }
+
+    @Override
+    public XRecyclerView getRv() {
+        return mRecycleview;
+    }
 }
