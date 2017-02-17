@@ -120,6 +120,9 @@
         <activity
             android:name=".findpwd.FindPwdActivity"
             android:screenOrientation="portrait"></activity>
+   <activity
+            android:name=".saomiao.SaoMiaoActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <!--JPUSH-->

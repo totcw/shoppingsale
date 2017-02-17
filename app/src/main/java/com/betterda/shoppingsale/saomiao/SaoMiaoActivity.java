@@ -1,9 +1,9 @@
-package com.betterda.shoppingsale.ziti;
+package com.betterda.shoppingsale.saomiao;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -11,30 +11,33 @@ import android.widget.TextView;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.xrecycleview.XRecyclerView;
-import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
-import com.betterda.shoppingsale.http.MyObserver;
-import com.betterda.shoppingsale.http.NetWork;
-import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.TitleBean;
+import com.betterda.shoppingsale.javabean.ZiTi;
 import com.betterda.shoppingsale.order.OrderDetailActivity;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.utils.UtilMethod;
-import com.betterda.shoppingsale.widget.NormalTopBar;
+import com.betterda.shoppingsale.widget.TitleItemDecoration;
+import com.betterda.shoppingsale.ziti.WriteZiTiActivity;
 import com.betterda.shoppingsale.ziti.contract.ZiTiContract;
 import com.betterda.shoppingsale.ziti.presenter.ZiTiPresenterImpl;
 import com.betterda.shoppingsale.zxing.CaptureActivity;
+import com.zhy.base.adapter.ViewHolder;
+import com.zhy.base.adapter.recyclerview.CommonAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 自提列表
+ * 入口列表
  * Created by Administrator on 2016/12/29.
  */
 
-public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implements ZiTiContract.View {
+public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implements ZiTiContract.View {
 
     @BindView(R.id.layout_recycleview)
     XRecyclerView mRecycleview;
@@ -43,37 +46,45 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
     @BindView(R.id.relative_ziti_add)
     RelativeLayout mRelativeAdd;
     private boolean isBack;//是否是从扫描页面返回
+    private List<TitleBean<ZiTi>> mZiTiList;
+    private CommonAdapter<TitleBean<ZiTi>> mZiTiCommonAdapter;
+    private int pageNo=1;
 
     @Override
     protected ZiTiContract.Presenter onLoadPresenter() {
-        return new ZiTiPresenterImpl();
+        return null;
     }
 
     @Override
     public void initView() {
         super.initView();
-        setContentView(R.layout.activity_ziti);
+        setContentView(R.layout.activity_saomiao);
 
     }
 
     @Override
     public void init() {
         super.init();
-
         initRv();
         mLoadingpager.setonErrorClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPresenter().onError();
+                mLoadingpager.setLoadVisable();
+                pageNo = 1;
+                getData();
             }
         });
     }
+
+
 
     @Override
     protected void onStart() {
         super.onStart();
         if (!isBack) {
-            getPresenter().onStart();
+            mLoadingpager.setLoadVisable();
+            pageNo = 1;
+            getData();
         }
     }
 
@@ -84,18 +95,20 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
                 back();
                 break;
             case R.id.relative_ziti_add:
-                shoAdd();
+                Intent intent = new Intent(getmActivity(), CaptureActivity.class);
+                UiUtils.startIntentForResult(getmActivity(), intent, 0);
                 break;
         }
     }
 
 
     private void initRv() {
+        mZiTiList = new ArrayList<>();
         mRecycleview.setVisibility(View.VISIBLE);
         mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
-        mRecycleview.setAdapter(getPresenter().getRvAdapter());
-        mRecycleview.addItemDecoration(getPresenter().getItemDecoration());
+
+        mRecycleview.addItemDecoration(getItemDecoration());
         mRecycleview.setLoadingMoreEnabled(true);
         mRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
@@ -105,46 +118,42 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
 
             @Override
             public void onLoadMore() {
-                getPresenter().onLoadMore();
-            }
-        });
-    }
-
-    private void shoAdd() {
-        View view1 = View.inflate(getmActivity(), R.layout.pp_ziti, null);
-        TextView tvSao = (TextView) view1.findViewById(R.id.tv_pp_ziti_sao);
-        TextView tvWrite = (TextView) view1.findViewById(R.id.tv_pp_ziti_write);
-        tvSao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getmActivity(), CaptureActivity.class);
-                UiUtils.startIntentForResult(getmActivity(), intent, 0);
-                closePopupWindow();
-            }
-        });
-        tvWrite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UiUtils.startIntent(getmActivity(), WriteZiTiActivity.class);
-                closePopupWindow();
+                pageNo++;
+                getData();
             }
         });
 
-        setUpPopupWindow(view1, mRelativeAdd, UtilMethod.dip2px(getmActivity(), 110), UtilMethod.dip2px(getmActivity(), 96));
+
+        mZiTiCommonAdapter = new CommonAdapter<TitleBean<ZiTi>>(getmActivity(), R.layout.item_recycleview_ziti, mZiTiList) {
+            @Override
+            public void convert(ViewHolder holder, TitleBean<ZiTi> ziTi) {
+                if (ziTi != null) {
+                    ZiTi data = ziTi.getData();
+                    if (data != null) {
+
+                        holder.setText(R.id.tv_tiem_hexiao_kahao, data.getBarCode());
+                        holder.setText(R.id.tv_item_hexiao_time, data.getBarTime());
+                    }
+                }
+            }
+        };
+        mRecycleview.setAdapter(mZiTiCommonAdapter);
     }
+
+
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        System.out.println("返回");
+
         if (Activity.RESULT_OK == resultCode) {
             if (requestCode == 0) {
                 isBack = true;
                 if (data != null) {
                     String result = data.getStringExtra("result");
 
-                    getData(result);
+                    parseData(result);
 
 
                 }
@@ -157,7 +166,7 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
      *
      * @param result
      */
-    private void getData(String result) {
+    private void parseData(String result) {
         if (!TextUtils.isEmpty(result)) {
             String[] split = result.split(",");
             if (split != null && split.length > 1) {
@@ -171,11 +180,11 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
         }
     }
 
-    @Override
-    public void dismiss() {
-        super.dismiss();
-        UiUtils.backgroundAlpha(1.0f, getmActivity());
+
+    private void getData() {
+
     }
+
 
     @Override
     public LoadingPager getLodapger() {
@@ -190,6 +199,11 @@ public class ZiTiActivity extends BaseActivity<ZiTiContract.Presenter> implement
 
     @Override
     public XRecyclerView getRv() {
-        return mRecycleview;
+        return null;
+    }
+
+
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        return new TitleItemDecoration<ZiTi>(getmActivity(), mZiTiList);
     }
 }

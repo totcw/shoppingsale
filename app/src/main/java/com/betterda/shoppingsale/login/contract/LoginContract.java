@@ -27,12 +27,15 @@ public interface View extends IView {
     EditText getTvPwd();
 
     ImageView getImageView();
+    void setAlias(String alias);
 }
 
 public interface Presenter extends IPresenter<View> {
     void login();
 
     void loginThree(String s, String uid);
+
+
 }
 
 public interface Model extends IModel {

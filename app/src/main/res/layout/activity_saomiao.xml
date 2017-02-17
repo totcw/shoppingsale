@@ -29,7 +29,7 @@
             android:layout_marginLeft="48dp"
             android:layout_marginRight="48dp"
             android:gravity="center"
-            android:text="自提列表"
+            android:text="入库列表"
             android:textColor="#FF000000"
             android:textSize="16sp"
             android:textStyle="normal" />
@@ -43,12 +43,12 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp">
 
-            <ImageView
-
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+            <TextView
+                android:text="扫一扫"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="@mipmap/add_ziti" />
+                 />
 
 
         </RelativeLayout>

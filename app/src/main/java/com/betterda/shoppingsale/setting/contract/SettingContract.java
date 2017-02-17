@@ -12,6 +12,7 @@ import com.betterda.shoppingsale.base.IView;
 public class SettingContract {
 
     public interface View extends IView {
+
     }
 
     public interface Presenter extends IPresenter<View> {

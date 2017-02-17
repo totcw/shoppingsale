@@ -25,6 +25,7 @@ import com.betterda.shoppingsale.http.NetWork;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
 import com.betterda.shoppingsale.javabean.ScanStock;
 import com.betterda.shoppingsale.order.OrderActivity;
+import com.betterda.shoppingsale.saomiao.SaoMiaoActivity;
 import com.betterda.shoppingsale.shouye.adapter.LunBoTuAdapter;
 import com.betterda.shoppingsale.shouye.contract.ShouYeContract;
 import com.betterda.shoppingsale.shouye.presenter.ShouYePresenterImpl;
@@ -123,8 +124,9 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
                 startToOrder("全部");
                 break;
             case R.id.linear_second4://扫码入库
-                Intent intent = new Intent(getmActivity(), CaptureActivity.class);
-                UiUtils.startIntentForResult(getmActivity(),intent,0);
+                UiUtils.startIntent(getmActivity(), SaoMiaoActivity.class);
+               /* Intent intent = new Intent(getmActivity(), CaptureActivity.class);
+                UiUtils.startIntentForResult(getmActivity(),intent,0);*/
                 break;
             case R.id.linear_second5://商品库存
                 UiUtils.startIntent(getmActivity(), StockActivity.class);

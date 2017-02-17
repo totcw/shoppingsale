@@ -160,7 +160,7 @@ public abstract class BaseFragment <P extends IPresenter> extends Fragment imple
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             //CacheUtils.putBoolean(getmActivity(), Constants.Cache.ISLOGIN, false);
-                            // CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "");
+                             CacheUtils.putString(getmActivity(), Constants.Cache.ACCOUNT, "");
                             UiUtils.startIntent(getmActivity(), LoginActivity.class);
                         }
                     })

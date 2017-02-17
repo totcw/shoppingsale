@@ -14,6 +14,43 @@
             android:layout_height="1dp">
 
         </View>
-        <include layout="@layout/layout_recycleview"></include>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+
+                android:layout_alignParentBottom="true"
+                android:id="@+id/relative_orderdetail_ti"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:background="#ffffff">
+
+                <TextView
+
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_alignParentRight="true"
+                    android:text="确认入库"
+                    android:textColor="@color/activityMainPressed"
+                    android:textSize="@dimen/textsize_large" />
+
+            </RelativeLayout>
+            <FrameLayout
+                android:layout_below="@id/relative_orderdetail_ti"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <include
+                    layout="@layout/layout_recycleview"></include>
+
+            </FrameLayout>
+
+
+        </RelativeLayout>
+
 
 </LinearLayout>
