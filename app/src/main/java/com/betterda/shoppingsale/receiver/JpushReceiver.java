@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
+import com.betterda.shoppingsale.login.LoginActivity;
 import com.betterda.shoppingsale.message.MeassageActivity;
 
 import cn.jpush.android.api.JPushInterface;
@@ -33,7 +34,7 @@ public class JpushReceiver extends BroadcastReceiver {
             Log.d(TAG, "用户点击打开了通知");
             // 在这里可以自己写代码去定义用户点击后的行为
          if (context != null) {
-             Intent i = new Intent(context, MeassageActivity.class);  //自定义打开的界面
+             Intent i = new Intent(context, LoginActivity.class);  //自定义打开的界面
              i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
              context.startActivity(i);
          }
