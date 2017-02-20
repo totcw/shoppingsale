@@ -98,7 +98,6 @@ public class WelcomeActivity extends AppCompatActivity {
             public void success() {
                 //请求成功
                 UiUtils.startIntent(WelcomeActivity.this, LoginActivity.class);
-                UiUtils.showToast(WelcomeActivity.this,"请求权限成功,去首页");
             }
 
             @Override
@@ -155,7 +154,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
         permissionDialog.setTvcontent(sb.toString());
         permissionDialog.show();
-        UiUtils.showToast(WelcomeActivity.this,"获取权限失败,开启获取权限的对话框");
     }
 
     /**

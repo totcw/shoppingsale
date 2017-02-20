@@ -202,67 +202,8 @@ public class ShouYeFragment extends BaseFragment<ShouYeContract.Presenter> imple
 
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (Activity.RESULT_OK == resultCode) {
-            if (requestCode == 0) {
 
-                if (data != null) {
-                    String result = data.getStringExtra("result");
-                    if (!TextUtils.isEmpty(result)) {
-                        //提交扫描的json 信息给后台去入库
-                        getData(result);
-                    } else {
-                        UiUtils.showToast(getmActivity(), "扫描失败");
-                    }
 
-                }
-            }
-        }
-    }
 
-    private void getData(final String result) {
-  /*      ScanStock scanStock = new ScanStock();
-        scanStock.setProductId("402881e859818b18015981fa8ffa0007");
-        scanStock.setQuantity("10");
-        ScanStock scanStock2 = new ScanStock();
-        scanStock2.setProductId("402881e859904962015990bf3f1c0002");
-        scanStock2.setQuantity("5");
-        List<ScanStock> list = new ArrayList<>();
-        list.add(scanStock);
-        list.add(scanStock2);*/
-        final ShapeLoadingDialog dialog = UiUtils.createDialog(getmActivity(), "正在入库");
-        UiUtils.showDialog(getmActivity(),dialog);
-        getRxManager().add(NetWork.getNetService()
-                .scanStock(getAccount(),getToken(),result)
-                .compose(NetWork.handleResult(new BaseCallModel<String>()))
-                .subscribe(new MyObserver<String>() {
-                    @Override
-                    protected void onSuccess(String data, String resultMsg) {
-                        if (BuildConfig.LOG_DEBUG) {
-                            System.out.println("扫描入库:"+result);
-                        }
-                        UiUtils.showToast(getmActivity(),resultMsg);
-                        UiUtils.dissmissDialog(getmActivity(),dialog);
-                    }
-
-                    @Override
-                    public void onFail(String resultMsg) {
-                        if (BuildConfig.LOG_DEBUG) {
-                            System.out.println("扫描入库fail:"+resultMsg);
-                        }
-                        UiUtils.showToast(getmActivity(),resultMsg);
-                        UiUtils.dissmissDialog(getmActivity(),dialog);
-                    }
-
-                    @Override
-                    public void onExit() {
-
-                        UiUtils.dissmissDialog(getmActivity(),dialog);
-                            ExitToLogin();
-                    }
-                }));
-    }
 
 }

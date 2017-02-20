@@ -81,7 +81,7 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
                                             UiUtils.startIntent(getView().getmActivity(), MainActivity.class);
                                             //  getView().getmActivity().finish();
                                             getView().setAlias(data.getAccount());
-                                            UiUtils.showToast(getView().getmActivity(),resultMsg);
+                                           // UiUtils.showToast(getView().getmActivity(),resultMsg);
                                         } else {
                                             UiUtils.showToast(getView().getmActivity(), "登录失败,获取信息失败");
                                         }

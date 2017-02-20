@@ -11,11 +11,19 @@ import android.widget.TextView;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.xrecycleview.XRecyclerView;
+import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BaseActivity;
+import com.betterda.shoppingsale.http.MyObserver;
+import com.betterda.shoppingsale.http.NetWork;
+import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.Batch;
 import com.betterda.shoppingsale.javabean.TitleBean;
 import com.betterda.shoppingsale.javabean.ZiTi;
 import com.betterda.shoppingsale.order.OrderDetailActivity;
+import com.betterda.shoppingsale.stock.StockActivity;
+import com.betterda.shoppingsale.utils.Constants;
+import com.betterda.shoppingsale.utils.NetworkUtils;
 import com.betterda.shoppingsale.utils.UiUtils;
 import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.widget.TitleItemDecoration;
@@ -46,8 +54,8 @@ public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implem
     @BindView(R.id.relative_ziti_add)
     RelativeLayout mRelativeAdd;
     private boolean isBack;//是否是从扫描页面返回
-    private List<TitleBean<ZiTi>> mZiTiList;
-    private CommonAdapter<TitleBean<ZiTi>> mZiTiCommonAdapter;
+    private List<TitleBean<Batch>> mZiTiList;
+    private CommonAdapter<TitleBean<Batch>> mZiTiCommonAdapter;
     private int pageNo=1;
 
     @Override
@@ -124,15 +132,23 @@ public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implem
         });
 
 
-        mZiTiCommonAdapter = new CommonAdapter<TitleBean<ZiTi>>(getmActivity(), R.layout.item_recycleview_ziti, mZiTiList) {
+        mZiTiCommonAdapter = new CommonAdapter<TitleBean<Batch>>(getmActivity(), R.layout.item_recycleview_ziti, mZiTiList) {
             @Override
-            public void convert(ViewHolder holder, TitleBean<ZiTi> ziTi) {
+            public void convert(ViewHolder holder, TitleBean<Batch> ziTi) {
                 if (ziTi != null) {
-                    ZiTi data = ziTi.getData();
+                    final Batch data = ziTi.getData();
                     if (data != null) {
 
-                        holder.setText(R.id.tv_tiem_hexiao_kahao, data.getBarCode());
-                        holder.setText(R.id.tv_item_hexiao_time, data.getBarTime());
+                        holder.setText(R.id.tv_tiem_hexiao_kahao, data.getBatchCode());
+                        holder.setText(R.id.tv_item_hexiao_time, data.getReceiveTime());
+                        holder.setOnClickListener(R.id.linear_ziti, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(getmActivity(), StockActivity.class);
+                                intent.putExtra("batchCode", data.getBatchCode());
+                                UiUtils.startIntent(getmActivity(),intent);
+                            }
+                        });
                     }
                 }
             }
@@ -162,27 +178,70 @@ public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implem
     }
 
     /**
-     * 解析二维码获取到自提码和订单号
-     *
+     * 解析扫描的二维码
      * @param result
      */
     private void parseData(String result) {
-        if (!TextUtils.isEmpty(result)) {
-            String[] split = result.split(",");
-            if (split != null && split.length > 1) {
-                Intent intent = new Intent(getmActivity(), OrderDetailActivity.class);
-                intent.putExtra("orderId", split[1]);
-                intent.putExtra("barcode", split[0]);
-                UiUtils.startIntent(getmActivity(), intent);
-            }
-        } else {
-            UiUtils.showToast(getmActivity(), "扫描失败");
-        }
+        Intent intent = new Intent(getmActivity(), StockActivity.class);
+        intent.putExtra("isStock", true);
+        intent.putExtra("batchCode", result);
+        UiUtils.startIntent(getmActivity(),intent);
     }
 
 
     private void getData() {
+        NetworkUtils.isNetWork(getmActivity(), mLoadingpager, new NetworkUtils.SetDataInterface() {
+            @Override
+            public void getDataApi() {
+                getRxManager().add(NetWork.getNetService()
+                .getBatchList(getAccount(),getToken(),pageNo+"", Constants.PAGESIZE)
+                .compose(NetWork.handleResult(new BaseCallModel<List<Batch>>()))
+                .subscribe(new MyObserver<List<Batch>>() {
+                    @Override
+                    protected void onSuccess(List<Batch> data, String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("入库:" + data);
+                        }
+                        if (data != null) {
+                            if (mZiTiList != null && mZiTiCommonAdapter != null) {
+                                if (pageNo == 1) {
+                                    mZiTiList.clear();
+                                    mRecycleview.setNoMore(false);
+                                } else {
+                                    UtilMethod.onLoadMore(data,mRecycleview);
+                                }
+                                for (Batch ziTi : data) {
+                                    if (ziTi != null) {
+                                        String time = ziTi.getReceiveTime();
+                                        int indexOf = time.lastIndexOf("-");
+                                        String tag = time.substring(0, indexOf);
+                                        TitleBean<Batch> titleBean = new TitleBean<Batch>();
+                                        titleBean.setData(ziTi);
+                                        titleBean.setTag(tag);
+                                        mZiTiList.add(titleBean);
+                                    }
+                                }
+                                mZiTiCommonAdapter.notifyDataSetChanged();
+                            }
+                        }
+                        UtilMethod.hideOrEmpty(mZiTiList,mLoadingpager);
+                    }
 
+                    @Override
+                    public void onFail(String resultMsg) {
+                        if (BuildConfig.LOG_DEBUG) {
+                            System.out.println("入库fail:" + resultMsg);
+                        }
+                        UtilMethod.setLoadpagerError(mLoadingpager);
+                    }
+
+                    @Override
+                    public void onExit() {
+                        ExitToLogin();
+                    }
+                }));
+            }
+        });
     }
 
 
@@ -204,6 +263,6 @@ public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implem
 
 
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new TitleItemDecoration<ZiTi>(getmActivity(), mZiTiList);
+        return new TitleItemDecoration<Batch>(getmActivity(), mZiTiList);
     }
 }

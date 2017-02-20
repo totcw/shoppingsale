@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.stock;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.betterda.mylibrary.LoadingPager;
 import com.betterda.mylibrary.xrecycleview.XRecyclerView;
@@ -26,6 +27,8 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
     XRecyclerView mRecycleview;
     @BindView(R.id.layout_loadingpager)
     LoadingPager mLoadingpager;
+    @BindView(R.id.relative_orderdetail_ti)
+    RelativeLayout mRelativeTi;//确认入库
 
     @Override
     protected StockContract.Presenter onLoadPresenter() {
@@ -54,11 +57,14 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
 
 
 
-    @OnClick({R.id.bar_back})
+    @OnClick({R.id.bar_back,R.id.relative_orderdetail_ti})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_back:
                 back();
+                break;
+            case R.id.relative_orderdetail_ti://确认入库
+                getPresenter().comfirm();
                 break;
 
         }
@@ -87,5 +93,15 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
     @Override
     public LoadingPager getLodapger() {
         return mLoadingpager;
+    }
+
+    @Override
+    public RelativeLayout getRelativeTi() {
+        return mRelativeTi;
+    }
+
+    @Override
+    public NormalTopBar getTopView() {
+        return mTopbarStock;
     }
 }

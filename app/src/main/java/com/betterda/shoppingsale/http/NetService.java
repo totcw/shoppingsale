@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.http;
 
 import com.betterda.shoppingsale.javabean.BankCard;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
+import com.betterda.shoppingsale.javabean.Batch;
 import com.betterda.shoppingsale.javabean.MeassageContent;
 import com.betterda.shoppingsale.javabean.MeassageType;
 import com.betterda.shoppingsale.javabean.MingXi;
@@ -48,7 +49,6 @@ public interface NetService {
                                                  @Field("accountType") String accountType);
 
 
-
     /**
      * 忘记密码
      *
@@ -61,7 +61,7 @@ public interface NetService {
     Observable<BaseCallModel<String>> getPwdUpdate(@Field("account") String account,
                                                    @Field("password") String password,
                                                    @Field("accountType") String accountType
-                                                   );
+    );
 
     /**
      * 注册
@@ -72,16 +72,16 @@ public interface NetService {
     @FormUrlEncoded
     @POST(Constants.Url.URL_REGISTER)
     Observable<BaseCallModel<String>> getRegister(@Field("account") String account,
-                                                   @Field("shopName") String shopName,
-                                                   @Field("legalPerson") String legalPerson,
-                                                   @Field("province") String province,
-                                                   @Field("city") String city,
-                                                   @Field("area") String area,
-                                                   @Field("addressDetail") String addressDetail,
-                                                   @Field("businessLicense") String businessLicense,
-                                                   @Field("idCardPositive") String idCardPositive,
-                                                   @Field("idCardBack") String idCardBack
-                                                  );
+                                                  @Field("shopName") String shopName,
+                                                  @Field("legalPerson") String legalPerson,
+                                                  @Field("province") String province,
+                                                  @Field("city") String city,
+                                                  @Field("area") String area,
+                                                  @Field("addressDetail") String addressDetail,
+                                                  @Field("businessLicense") String businessLicense,
+                                                  @Field("idCardPositive") String idCardPositive,
+                                                  @Field("idCardBack") String idCardBack
+    );
 
 
     /**
@@ -265,7 +265,7 @@ public interface NetService {
     @POST(Constants.Url.URL_SCANSTOCK)
     Observable<BaseCallModel<String>> scanStock(@Field("account") String account,
                                                 @Field("token") String token,
-                                                @Field("jsonData") String jsonData
+                                                @Field("batchCode") String batchCode
     );
 
     /**
@@ -372,8 +372,6 @@ public interface NetService {
     );
 
 
-
-
     /**
      * 获取推荐的人数和返现金额
      *
@@ -413,5 +411,34 @@ public interface NetService {
                                                              @Field("token") String token,
                                                              @Field("pageNo") String pageNo,
                                                              @Field("pageSize") String pageSize
+    );
+
+    /**
+     * 获取入库记录
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_BATCHLIST)
+    Observable<BaseCallModel<List<Batch>>> getBatchList(@Field("account") String account,
+                                                        @Field("token") String token,
+                                                        @Field("pageNo") String pageNo,
+                                                        @Field("pageSize") String pageSize
+    );
+
+    /**
+     * 获取配货详情
+     *
+     * @param account
+     * @param token
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(Constants.Url.URL_BATCHDETAIL)
+    Observable<BaseCallModel<List<Stock>>> getBatchDetail(@Field("account") String account,
+                                                           @Field("token") String token,
+                                                           @Field("batchCode") String batchCode
     );
 }

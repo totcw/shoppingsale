@@ -73,7 +73,6 @@ public class FindPwdPresenterImpl extends BasePresenter<FindPwdContract.View, Fi
                         .subscribe(new MyObserver<String>() {
                             @Override
                             protected void onSuccess(String data, String resultMsg) {
-                                UiUtils.showToast(getView().getmActivity(),resultMsg);
                                 UiUtils.dissmissDialog(getView().getmActivity(),dialog);
                                 getView().getmActivity().finish();
                             }

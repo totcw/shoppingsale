@@ -9,6 +9,7 @@ public class Stock {
     private String productId;
     private String productName;
     private String salePrice;
+    private String vipPrice;
     private String littlePicture;
     private String inventoryCount;//数量
 
@@ -52,12 +53,21 @@ public class Stock {
         this.inventoryCount = inventoryCount;
     }
 
+    public String getVipPrice() {
+        return vipPrice;
+    }
+
+    public void setVipPrice(String vipPrice) {
+        this.vipPrice = vipPrice;
+    }
+
     @Override
     public String toString() {
         return "Stock{" +
                 "productId='" + productId + '\'' +
                 ", productName='" + productName + '\'' +
                 ", salePrice='" + salePrice + '\'' +
+                ", vipPrice='" + vipPrice + '\'' +
                 ", littlePicture='" + littlePicture + '\'' +
                 ", inventoryCount='" + inventoryCount + '\'' +
                 '}';

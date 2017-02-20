@@ -44,6 +44,9 @@ public class Constants {
         public static final String URL_GET_WALLET = "appAPI.do?api/account/wallet/get";//我的钱包
         public static final String URL_GET_WALLETMINGXI = "appAPI.do?api/account/wallet/detail/get";//钱包的交易明细
         public static final String URL_GET_CASH = "appAPI.do?api/account/cash/withdraw";//提现
+        public static final String URL_BATCHLIST = "appAPI.do?api/merchant/batchList/get";//获取入库记录
+        public static final String URL_BATCHDETAIL = "appAPI.do?api/merchant/batchDetail/get";//获取配货详情
+
     }
 
     public class WeiXin {

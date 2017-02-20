@@ -24,8 +24,14 @@
                 android:id="@+id/relative_orderdetail_ti"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:background="#ffffff">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/divierLine"
+                    ></View>
 
                 <TextView
 
@@ -40,7 +46,7 @@
 
             </RelativeLayout>
             <FrameLayout
-                android:layout_below="@id/relative_orderdetail_ti"
+                android:layout_above="@id/relative_orderdetail_ti"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
