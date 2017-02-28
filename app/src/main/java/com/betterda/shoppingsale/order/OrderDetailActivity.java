@@ -125,6 +125,10 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
             if (mRelativeTi.getVisibility() != View.VISIBLE) {
                 mRelativeGet.setVisibility(View.VISIBLE);
             }
+        } else {
+            if (mRelativeTi.getVisibility() != View.VISIBLE) {
+                mRelativeGet.setVisibility(View.GONE);
+            }
         }
 
 
