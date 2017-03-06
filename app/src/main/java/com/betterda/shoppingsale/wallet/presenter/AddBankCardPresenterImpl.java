@@ -60,6 +60,11 @@ public class AddBankCardPresenterImpl extends BasePresenter<AddBankCardContract.
             UiUtils.showToast(getView().getmActivity(), "银行卡号不能为空");
             return;
         }
+        if (cardnum.length() != 19 && cardnum.length() != 16 && cardnum.length() != 18) {
+            UiUtils.showToast(getView().getmActivity(), "请输入正确的银行卡号");
+            return;
+        }
+
         if (TextUtils.isEmpty(number)) {
             UiUtils.showToast(getView().getmActivity(), "预留手机号码不能为空");
             return;
