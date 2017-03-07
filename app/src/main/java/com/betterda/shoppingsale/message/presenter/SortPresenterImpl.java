@@ -1,11 +1,14 @@
 package com.betterda.shoppingsale.message.presenter;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.betterda.shoppingsale.BuildConfig;
 import com.betterda.shoppingsale.R;
 import com.betterda.shoppingsale.base.BasePresenter;
+import com.betterda.shoppingsale.factory.LoadImageFactory;
 import com.betterda.shoppingsale.http.MyObserver;
 import com.betterda.shoppingsale.http.NetWork;
 import com.betterda.shoppingsale.javabean.BaseCallModel;
@@ -48,6 +51,11 @@ public class SortPresenterImpl extends BasePresenter<SortContract.View,SortContr
                     holder.setText(R.id.tv_item_meassage_title, meassage.getMsgType());
                     holder.setText(R.id.tv_item_meassage_time, meassage.getMsgTime());
                     holder.setText(R.id.tv_item_meassage_content, meassage.getTitle());
+                    if (!TextUtils.isEmpty(meassage.getLittlePicture())) {
+                        ImageView imageView = holder.getView(R.id.iv_item_rv_meassage);
+                        LoadImageFactory.getLoadImageInterface().loadImageFit(getView().getmActivity(), meassage.getLittlePicture(), imageView);
+                    }
+
                     holder.setOnClickListener(R.id.linear_item_rv_meassage, new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

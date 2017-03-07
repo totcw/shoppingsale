@@ -86,21 +86,30 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                                         System.out.println("推荐返现明细:" + data.toString() + resultMsg);
                                     }
                                     if (data != null) {
-                                        for (MingXi mingXi : data) {
-                                            if (mingXi != null) {
-                                                String time = mingXi.getTime();
-                                                int indexOf = time.lastIndexOf("-");
-                                                String tag = time.substring(0, indexOf);
-                                                TitleBean<MingXi> titleBean = new TitleBean<MingXi>();
-                                                titleBean.setData(mingXi);
-                                                titleBean.setTag(tag);
-                                                mingXiList.add(titleBean);
-                                            }
-                                        }
 
-                                        mingXiCommonAdapter.notifyDataSetChanged();
+                                        if (mingXiList != null && mingXiCommonAdapter != null) {
+                                            if (pageNo == 1) {
+                                                mingXiList.clear();
+                                                getView().getRv().setNoMore(false);
+                                            } else {
+                                                UtilMethod.onLoadMore(data, getView().getRv());
+                                            }
+                                            for (MingXi mingXi : data) {
+                                                if (mingXi != null) {
+                                                    String time = mingXi.getTime();
+                                                    int indexOf = time.lastIndexOf("-");
+                                                    String tag = time.substring(0, indexOf);
+                                                    TitleBean<MingXi> titleBean = new TitleBean<MingXi>();
+                                                    titleBean.setData(mingXi);
+                                                    titleBean.setTag(tag);
+                                                    mingXiList.add(titleBean);
+                                                }
+                                            }
+
+                                            mingXiCommonAdapter.notifyDataSetChanged();
+                                        }
                                     }
-                                    UtilMethod.hideOrEmpty(data,getView().getLodapger());
+                                    UtilMethod.hideOrEmpty(mingXiList,getView().getLodapger());
 
                                 }
 
@@ -125,7 +134,7 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                 @Override
                 public void getDataApi() {
                     getView().getRxManager().add(NetWork.getNetService()
-                            .getWalletMingXi(getView().getAccount(), getView().getToken(), wateType)
+                            .getWalletMingXi(getView().getAccount(), getView().getToken(), wateType,pageNo+"", Constants.PAGESIZE)
                             .compose(NetWork.handleResult(new BaseCallModel<List<MingXi>>()))
                             .subscribe(new MyObserver<List<MingXi>>() {
                                 @Override

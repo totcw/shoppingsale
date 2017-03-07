@@ -14,6 +14,7 @@ import com.betterda.shoppingsale.javabean.Bus;
 import com.betterda.shoppingsale.order.contract.OrderDetailContract;
 import com.betterda.shoppingsale.javabean.OrderAll;
 import com.betterda.shoppingsale.order.presenter.OrderDetailPresenterImpl;
+import com.betterda.shoppingsale.utils.UtilMethod;
 import com.betterda.shoppingsale.widget.NormalTopBar;
 import com.zhy.base.adapter.ViewHolder;
 import com.zhy.base.adapter.recyclerview.CommonAdapter;
@@ -117,10 +118,13 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
         mTvOrderdetailShouhuoren2.setText(orderAll.getName());
         mTvOrderdetailNumber.setText(orderAll.getNumber());
         mTvOrderdetailOrdernum.setText(orderAll.getOrderId());
-        mTvOrderdetailYunfei.setText(orderAll.getFreight() + "");
+        mTvOrderdetailYunfei.setText(orderAll.getFreight());
         mTvOrderdetailPeisong.setText(orderAll.getType());
-        mTvOrderdetailDaiJinJuan.setText(orderAll.getVoucher());
+        mTvOrderdetailDaiJinJuan.setText("￥"+orderAll.getVoucher());
         mTvOrderdetailTime.setText(orderAll.getTime());
+        mTvOrderdetailHejiMoney.setText("￥ "+orderAll.getMoney());  //合计
+        mTvOrderdetailAmnout.setText("共" + UtilMethod.addAmount(orderAll.getBusList()) + "件商品"); //数量
+
         if ("待发货".equals(orderAll.getOrderStatus())) {
             if (mRelativeTi.getVisibility() != View.VISIBLE) {
                 mRelativeGet.setVisibility(View.VISIBLE);
