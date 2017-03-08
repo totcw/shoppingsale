@@ -182,6 +182,7 @@ public class SaoMiaoActivity extends BaseActivity<ZiTiContract.Presenter> implem
      * @param result
      */
     private void parseData(String result) {
+        System.out.println("批次号:"+result);
         Intent intent = new Intent(getmActivity(), StockActivity.class);
         intent.putExtra("isStock", true);
         intent.putExtra("batchCode", result);

@@ -75,7 +75,9 @@ public class LoginPresenterImpl  extends BasePresenter<LoginContract.View,LoginC
 
                                             //缓存手机号
                                             CacheUtils.putString(getView().getmActivity(), Constants.Cache.ACCOUNT, data.getAccount());
+
                                             CacheUtils.putString(getView().getmActivity(), data.getAccount()+Constants.Cache.PWD, pwd);
+
                                             //缓存token
                                             CacheUtils.putString(getView().getmActivity(), data.getAccount() + Constants.Cache.TOKEN, data.getToken());
                                             UiUtils.startIntent(getView().getmActivity(), MainActivity.class);

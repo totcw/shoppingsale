@@ -117,7 +117,7 @@ public class OrderDetailActivity extends BaseActivity<OrderDetailContract.Presen
         mTvOrderdetailAddress2.setText(orderAll.getAddress());
         mTvOrderdetailShouhuoren2.setText(orderAll.getName());
         mTvOrderdetailNumber.setText(orderAll.getNumber());
-        mTvOrderdetailOrdernum.setText(orderAll.getOrderId());
+        mTvOrderdetailOrdernum.setText("订单号:"+orderAll.getOrderId());
         mTvOrderdetailYunfei.setText(orderAll.getFreight());
         mTvOrderdetailPeisong.setText(orderAll.getType());
         mTvOrderdetailDaiJinJuan.setText("￥"+orderAll.getVoucher());

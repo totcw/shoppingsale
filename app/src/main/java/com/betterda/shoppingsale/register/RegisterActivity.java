@@ -196,8 +196,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
                 return;
             }
             // 防止内存溢出
-            String path = Environment.getExternalStorageDirectory()
-                    + "/image.png";
+            String path = Environment.getExternalStorageDirectory() +"/image.png";
 
             Bitmap pic = ImageTools.scacleToBitmap(path, this);
             if (pic != null) {// 这个ImageView是拍照完成后显示图片

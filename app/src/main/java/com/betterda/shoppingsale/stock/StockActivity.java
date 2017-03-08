@@ -75,7 +75,7 @@ public class StockActivity extends BaseActivity<StockContract.Presenter> impleme
         mRecycleview.setPullRefreshEnabled(false);
         mRecycleview.setLayoutManager(new LinearLayoutManager(getmActivity()));
         mRecycleview.setAdapter(getPresenter().getRvAdapter());
-        mRecycleview.setLoadingMoreEnabled(true);
+        mRecycleview.setLoadingMoreEnabled(false);
         mRecycleview.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
