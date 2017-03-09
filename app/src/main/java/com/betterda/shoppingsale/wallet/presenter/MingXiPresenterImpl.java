@@ -2,6 +2,7 @@ package com.betterda.shoppingsale.wallet.presenter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 
 
 import com.betterda.shoppingsale.BuildConfig;
@@ -63,6 +64,15 @@ public class MingXiPresenterImpl extends BasePresenter<MingXiContract.View, Ming
                         holder.setText(R.id.tv_mingxi_time, mingXi1.getTime());
                         holder.setText(R.id.tv_mingxi_money, mingXi1.getSum());
                         holder.setText(R.id.tv_mingxi_money2, mingXi1.getMoney());
+                        if (!TextUtils.isEmpty(mingXi1.getMoney())) {
+                            if (mingXi1.getMoney().startsWith("+")) {
+                                holder.setTextColor(R.id.tv_mingxi_money2, getView().getmActivity().getResources().getColor(R.color.title_red));
+                            } else if (mingXi1.getMoney().startsWith("-")) {
+                                holder.setTextColor(R.id.tv_mingxi_money2, getView().getmActivity().getResources().getColor(R.color.green));
+                            } else {
+                                holder.setTextColor(R.id.tv_mingxi_money2, getView().getmActivity().getResources().getColor(R.color.activityMainNormal));
+                            }
+                        }
                     }
                 }
             }
